@@ -6,11 +6,14 @@ public class CountNumbersOfTicket {
 
     public boolean countNumbers(List<Integer> number){
         boolean result = false;
-        if(number.get(0)+number.get(1)+number.get(2)==number.get(3)+number.get(4)+number.get(5)){
-            result=true;
+        try {
+            if (number.get(0) + number.get(1) + number.get(2) == number.get(3) + number.get(4) + number.get(5)) {
+                result = true;
+            }
+        } finally {
+            return result;
         }
 
-        return result;
 
     }
 }
