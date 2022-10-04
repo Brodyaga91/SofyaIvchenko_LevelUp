@@ -3,7 +3,11 @@
 <suite name="Negative">
     <test name="Start Negative tests">
         <classes>
-            <class name="ru.levelp.at.homework2.CountNumbersOfTicketTest"/>
+            <class name="ru.levelp.at.homework2.CountNumbersOfTicketTest">
+            <methods>
+                <include name="inputNumbersBad"/>
+            </methods>
+            </class>
         </classes>
 
     </test>

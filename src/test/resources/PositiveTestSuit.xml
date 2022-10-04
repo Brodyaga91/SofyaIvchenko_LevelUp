@@ -2,6 +2,13 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Positive">
     <test name="Start Positive tests">
+        <classes>
+            <class name="ru.levelp.at.homework2.CountNumbersOfTicketTest">
+                <methods>
+                    <include name="inputNumbers"/>
+                </methods>
+            </class>
+        </classes>
 
     </test>
 </suite>

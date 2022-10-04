@@ -3,11 +3,10 @@ package ru.levelp.at.homework2;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class CountNumbersOfTicketTest {
-    private static final List<Integer> INPUT = List.of(1, 2, 3, 1, 2, 3);
-    private static final Boolean RESULT = true;
     private CountNumbersOfTicket testCheck;
 
     @BeforeMethod
@@ -15,26 +14,38 @@ public class CountNumbersOfTicketTest {
         testCheck = new CountNumbersOfTicket();
     }
 
-    @Test
-    //проверка любых успешных с разными корректным входными данными (a=b, a!=b, 0)
-    public void inputNumbersPositive() {
-        boolean actualOutput = testCheck.countNumbers(INPUT);
-        Assertions.assertThat(actualOutput).isEqualTo(RESULT);
-
+    @DataProvider
+    public Object[][] checkHappyDataProvider() {
+        return new Object[][] {
+            {List.of(1, 2, 3, 4, 5, 6), false},
+            {List.of(1, 2, 3, 1, 2, 3), true},
+            {List.of(0, 0, 0, 0, 0, 0), true}
+        };
     }
 
-    @Test
-    public void inputNullNegative() {
-        boolean actualOutput = testCheck.countNumbers(null);
-        Assertions.assertThat(actualOutput).isEqualTo(RESULT);
-
+    @DataProvider
+    public Object[][] checkHappyDataProviderNegative() {
+        return new Object[][] {
+            {List.of(1, 2, 3, 4, 5, 6, 7), false},
+            {List.of(1, 2, 3, 1, 2), false},
+            {List.of(-1, -2, -3, -1, -2, -3), false},
+            {List.of("a", "a", "a", "a", "a", "a"), false},
+            {null, false}
+        };
     }
 
-    @Test
-    public void inputNotFullNumbersNegative() {
-        boolean actualOutput = testCheck.countNumbers(null);
-        Assertions.assertThat(actualOutput).isEqualTo(RESULT);
-        //доделать параметры
+    @Test(dataProvider = "checkHappyDataProvider")
+    public void inputNumbers(List<Integer> input, boolean result) {
+        boolean actualOutput = testCheck.countNumbers(input);
+        Assertions.assertThat(actualOutput).isEqualTo(result);
     }
 
+    @Test(dataProvider = "checkHappyDataProviderNegative")
+    public void inputNumbersBad(List<Integer> input, boolean result) {
+        boolean actualOutput = testCheck.countNumbers(input);
+        Assertions.assertThat(actualOutput).isEqualTo(result);
+    }
 }
+
+
+

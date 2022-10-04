@@ -18,7 +18,36 @@
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
 
         <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
+
+        <suite.base.dir>src/test/resources/</suite.base.dir>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>Negative</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <suite.name>${suite.base.dir}NegativeTestSuit.xml</suite.name>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>AllTestSuits</id>
+            <properties>
+                <suite.name>${suite.base.dir}AllTestsSuit.xml</suite.name>
+            </properties>
+        </profile>
+
+
+        <profile>
+            <id>Positive</id>
+            <properties>
+                <suite.name>${suite.base.dir}PositiveTestSuit.xml</suite.name>
+            </properties>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
@@ -62,7 +91,7 @@
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
                         <suiteXmlFiles>
-                            <suiteXmlFile>src/test/resources/NegativeTestSuit.xml</suiteXmlFile>
+                            <suiteXmlFile>${suite.base.dir}NegativeTestSuit.xml</suiteXmlFile>
                         </suiteXmlFiles>
                     </configuration>
 
