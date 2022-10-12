@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Negative">
+    <test name="Start Negative tests">
+        <classes>
+            <class name="ru.levelp.at.homework2.CountNumbersOfTicketTest">
+            <methods>
+                <include name="inputNumbersBad"/>
+            </methods>
+            </class>
+        </classes>
+
+    </test>
+</suite>

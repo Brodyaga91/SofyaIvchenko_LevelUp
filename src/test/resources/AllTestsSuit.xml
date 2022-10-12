@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="AllTests">
+    <test name="Start all tests">
+        <classes>
+            <class name="ru.levelp.at.homework2.CountNumbersOfTicketTest"/>
+        </classes>
+    </test>
+</suite>
