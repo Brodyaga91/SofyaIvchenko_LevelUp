@@ -3,7 +3,7 @@
 <suite name="AllTests">
     <test name="Start all tests">
         <classes>
-            <class name="ru.levelp.at.homework3.CountNumbersOfTicketTest"/>
+            <class name="ru.levelp.at.homework3.Task1Test"/>
         </classes>
     </test>
 </suite>
