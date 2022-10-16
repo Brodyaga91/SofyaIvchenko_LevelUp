@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -62,13 +63,13 @@ public class Task2Test {
     }
 
     @Test(priority = 1)
-    public void sendMail(){
-        WebElement writeMail = driver.findElement(By.className("qa-LeftColumn-ComposeButton"));
+    public void sendMailCheckSentAndFolder() {
+        WebElement writeMail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("qa-LeftColumn-ComposeButton")));
         writeMail.click();
         WebElement destination = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("composeYabbles")));
         destination.sendKeys("lvluphomework@yandex.ru");
         WebElement subject = driver.findElement(By.className("composeTextField"));
-        subject.sendKeys("Тест");
+        subject.sendKeys("тема Тест");
         WebElement textField = driver.findElement(By.className("cke_wysiwyg_div"));
         textField.click();
         textField.sendKeys("Текст письма Тест");
@@ -78,11 +79,28 @@ public class Task2Test {
         closeFrame.click();
         WebElement sentFolder = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href$='sent']")));
         sentFolder.click();
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.tagName("body")).getText().contains("Тест"));
-        WebElement myFolders = driver.findElement(By.className("qa-LeftColumn-FolderExpander"));
-        myFolders.click();
-        WebElement testFolder = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[aria-label='Тест, папка']")));
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.tagName("body")).getText().contains("тема Тест"));
+        WebElement testFolder = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href$='folder/9']")));
         testFolder.click();
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.tagName("body")).getText().contains("Тест"));
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.tagName("body")).getText().contains("тема Тест"));
+        SOFT_ASSERTIONS.assertAll();
     }
+
+    @Test(priority = 2)
+    public void assertArtefacts() {
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-FromText")).getText().contains("lvluphomework@yandex.ru"));
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_subject")).getText().contains("тема Тест"));
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText().contains("Текст письма Тест"));
+        SOFT_ASSERTIONS.assertAll();
+    }
+
+    @AfterClass
+    public void finish(){
+        WebElement avatar = driver.findElement(By.className("user-account"));
+        avatar.click();
+        WebElement logOut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("legouser__menu-item_action_exit")));
+        logOut.click();
+        driver.quit();
+    }
+
 }

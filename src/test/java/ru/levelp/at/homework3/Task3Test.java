@@ -2,11 +2,12 @@ package ru.levelp.at.homework3;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.assertj.core.api.SoftAssertions;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -15,25 +16,23 @@ import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
-public class Task1Test {
-
+public class Task3Test {
     private static final String URL_MAIL = "https://dzen.ru/";
 
     private WebDriver driver;
     private WebDriverWait wait;
     private final SoftAssertions SOFT_ASSERTIONS = new SoftAssertions();
 
-   @BeforeClass
-   public void activateDriver() {
-       WebDriverManager.chromedriver().setup();
-       driver = new ChromeDriver();
-       wait = new WebDriverWait(driver, Duration.ofMillis(10000));
-   }
+    @BeforeClass
+    public void activateDriver() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofMillis(10000));
+    }
 
 
     @Test
-    public void loginMail()  {
+    public void loginMail() {
         driver.navigate().to(URL_MAIL);
         WebElement buttonLoginMainPage = driver.findElement(By.className("dzen-header-desktop__isUnauthorized-2e"));
         buttonLoginMainPage.click();
@@ -61,60 +60,43 @@ public class Task1Test {
 
     }
 
-    @Test (priority = 1)
-    public void createAndSaveDraft(){
-        WebElement writeMail = driver.findElement(By.className("qa-LeftColumn-ComposeButton"));
+    @Test(priority = 1)
+    public void sendMailCheckInbox() {
+        WebElement writeMail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("qa-LeftColumn-ComposeButton")));
         writeMail.click();
         WebElement destination = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("composeYabbles")));
         destination.sendKeys("lvluphomework@yandex.ru");
         WebElement subject = driver.findElement(By.className("composeTextField"));
-        subject.sendKeys("Тема письма");
+        subject.sendKeys("тема Задание 3");
         WebElement textField = driver.findElement(By.className("cke_wysiwyg_div"));
         textField.click();
-        textField.sendKeys("Текст письма");
-        WebElement buttonClose = driver.findElement(By.className("qa-ControlButton_button_close"));
-        buttonClose.click();
-        WebElement draftFolder = driver.findElement(By.cssSelector("[href$='draft']"));
-        draftFolder.click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span [title='Тема письма']")));
-        Boolean contain = driver.findElements(By.cssSelector("span [title='Тема письма']")).size()>0;
-        assertThat(contain.equals(true));
-    }
-
-    @Test (priority = 2)
-    public void assertArtefacts(){
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-FromText")).getText().contains("lvluphomework@yandex.ru"));
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_subject")).getText().contains("Тема письма"));
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText().contains("Текст письма"));
-        SOFT_ASSERTIONS.assertAll();
-    }
-
-    @Test (priority = 3)
-    public void sendDraft(){
-        WebElement myMail = driver.findElement(By.className("mail-MessageSnippet-Item_subject"));
-        myMail.click();
+        textField.sendKeys("Текст письма Задание 3");
         WebElement sendMail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ComposeSendButton")));
         sendMail.click();
         WebElement closeFrame = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ComposeDoneScreen-Actions")));
         closeFrame.click();
-        WebElement draftFolder = driver.findElement(By.cssSelector("[href$='draft']"));
-        draftFolder.click();
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.tagName("body")).getText().contains("В папке «Черновики» нет писем"));
-        WebElement sentFolder = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href$='sent']")));
-        sentFolder.click();
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.tagName("body")).getText().contains("Тема письма"));
-        SOFT_ASSERTIONS.assertAll();
-
+        driver.navigate().refresh();
+        Boolean contain = driver.findElement(By.tagName("body")).getText().contains("тема Задание 3");
+        assertThat(contain.compareTo(true));
     }
 
-    @AfterClass
-    public void finish(){
-        WebElement avatar = driver.findElement(By.className("user-account"));
-        avatar.click();
-        WebElement logOut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("legouser__menu-item_action_exit")));
-        logOut.click();
-        driver.quit();
+    @Test(priority = 2)
+    public void assertArtefacts() {
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-FromText")).getText().contains("lvluphomework@yandex.ru"));
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_subject")).getText().contains("тема Задание 3"));
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText().contains("Текст письма Задание 3"));
+        SOFT_ASSERTIONS.assertAll();
+    }
+
+    @Test(priority = 3)
+    public void deleteAndCheck(){
+        WebElement checkBox = driver.findElement(By.className("_nb-checkbox-normal-flag"));
+        checkBox.click();
+        WebElement buttonDelete = wait.until(ExpectedConditions.elementToBeClickable(By.className("ns-view-toolbar-button-delete")));
+        buttonDelete.click();
+        WebElement folderTrash = driver.findElement(By.cssSelector("[href$='trash']"));
+        folderTrash.click();
+        WebElement objectOfAssert = wait.until(ExpectedConditions.elementToBeClickable(By.className("ns-view-toolbar-button-delete")));
+
     }
 }
-
-
