@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -56,7 +57,7 @@ public class Task3Test {
         driver.switchTo().window(tabs2.get(0));
         driver.close();
         driver.switchTo().window(tabs2.get(1));
-        assertThat(driver.getTitle().equals("Входящие - Яндекс Почта"));
+        assertThat(driver.getTitle()).contains("Входящие - Яндекс Почта");
 
     }
 
@@ -76,15 +77,15 @@ public class Task3Test {
         WebElement closeFrame = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ComposeDoneScreen-Actions")));
         closeFrame.click();
         driver.navigate().refresh();
-        Boolean contain = driver.findElement(By.tagName("body")).getText().contains("тема Задание 3");
-        assertThat(contain.compareTo(true));
+        WebElement listOfSent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("mail-MessageSnippet-Content")));
+        assertThat(listOfSent.getText()).contains("тема Задание 3");
     }
 
     @Test(priority = 2)
     public void assertArtefacts() {
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-FromText")).getText().contains("lvluphomework@yandex.ru"));
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_subject")).getText().contains("тема Задание 3"));
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText().contains("Текст письма Задание 3"));
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.cssSelector("span[title='lvluphomework@yandex.ru']")).getAttribute("title")).isEqualTo("lvluphomework@yandex.ru");
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_subject")).getText()).contains("тема Задание 3");
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText()).contains("Текст письма Задание 3");
         SOFT_ASSERTIONS.assertAll();
     }
 
@@ -96,7 +97,17 @@ public class Task3Test {
         buttonDelete.click();
         WebElement folderTrash = driver.findElement(By.cssSelector("[href$='trash']"));
         folderTrash.click();
-        WebElement objectOfAssert = wait.until(ExpectedConditions.elementToBeClickable(By.className("ns-view-toolbar-button-delete")));
+        WebElement listOfSent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("mail-MessageSnippet-Content")));
+        assertThat(listOfSent.getText()).contains("тема Задание 3");
+    
+    }
 
+    @AfterClass
+    public void finish(){
+        WebElement avatar = driver.findElement(By.className("user-account"));
+        avatar.click();
+        WebElement logOut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("legouser__menu-item_action_exit")));
+        logOut.click();
+        driver.quit();
     }
 }

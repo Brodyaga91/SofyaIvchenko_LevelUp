@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
+
 public class Task1Test {
 
     private static final String URL_MAIL = "https://dzen.ru/";
@@ -57,13 +58,13 @@ public class Task1Test {
         driver.switchTo().window(tabs2.get(0));
         driver.close();
         driver.switchTo().window(tabs2.get(1));
-        assertThat(driver.getTitle().equals("Входящие - Яндекс Почта"));
+        assertThat(driver.getTitle()).contains("Входящие - Яндекс Почта");
 
     }
 
     @Test (priority = 1)
     public void createAndSaveDraft(){
-        WebElement writeMail = driver.findElement(By.className("qa-LeftColumn-ComposeButton"));
+        WebElement writeMail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("qa-LeftColumn-ComposeButton")));
         writeMail.click();
         WebElement destination = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("composeYabbles")));
         destination.sendKeys("lvluphomework@yandex.ru");
@@ -77,15 +78,14 @@ public class Task1Test {
         WebElement draftFolder = driver.findElement(By.cssSelector("[href$='draft']"));
         draftFolder.click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span [title='Тема письма']")));
-        Boolean contain = driver.findElements(By.cssSelector("span [title='Тема письма']")).size()>0;
-        assertThat(contain.equals(true));
+        assertThat(driver.findElement(By.tagName("body")).getText()).contains("Тема письма");
     }
 
     @Test (priority = 2)
     public void assertArtefacts(){
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-FromText")).getText().contains("lvluphomework@yandex.ru"));
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_subject")).getText().contains("Тема письма"));
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText().contains("Текст письма"));
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-FromText")).getText()).contains("lvluphomework@yandex.ru");
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_subject")).getText()).contains("Тема письма");
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText()).contains("Текст письма");
         SOFT_ASSERTIONS.assertAll();
     }
 
@@ -99,10 +99,12 @@ public class Task1Test {
         closeFrame.click();
         WebElement draftFolder = driver.findElement(By.cssSelector("[href$='draft']"));
         draftFolder.click();
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.tagName("body")).getText().contains("В папке «Черновики» нет писем"));
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("Text_typography_subheader-l")).getText()).contains("В папке «Черновики» нет писем");
         WebElement sentFolder = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href$='sent']")));
         sentFolder.click();
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.tagName("body")).getText().contains("Тема письма"));
+        driver.navigate().refresh();
+        WebElement listOfSent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("mail-MessageSnippet-Content")));
+        SOFT_ASSERTIONS.assertThat(listOfSent.getText()).contains("Тема письма");
         SOFT_ASSERTIONS.assertAll();
 
     }

@@ -23,7 +23,7 @@ public class Task2Test {
 
     private WebDriver driver;
     private WebDriverWait wait;
-    private SoftAssertions SOFT_ASSERTIONS = new SoftAssertions();
+    private final SoftAssertions SOFT_ASSERTIONS = new SoftAssertions();
 
     @BeforeClass
     public void activateDriver() {
@@ -34,7 +34,7 @@ public class Task2Test {
 
 
     @Test
-    public void loginMail() throws InterruptedException {
+    public void loginMail() {
         driver.navigate().to(URL_MAIL);
         WebElement buttonLoginMainPage = driver.findElement(By.className("dzen-header-desktop__isUnauthorized-2e"));
         buttonLoginMainPage.click();
@@ -54,11 +54,11 @@ public class Task2Test {
         driver.switchTo().frame(iFrame);
         WebElement buttonMail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("home-link2")));
         buttonMail.click();
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(0));
         driver.close();
         driver.switchTo().window(tabs2.get(1));
-        assertThat(driver.getTitle().equals("Входящие - Яндекс Почта"));
+        assertThat(driver.getTitle()).contains("Входящие - Яндекс Почта");
 
     }
 
@@ -79,18 +79,22 @@ public class Task2Test {
         closeFrame.click();
         WebElement sentFolder = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href$='sent']")));
         sentFolder.click();
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.tagName("body")).getText().contains("тема Тест"));
+        driver.navigate().refresh();
+        WebElement listOfMail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("mail-MessageSnippet-Content")));
+        SOFT_ASSERTIONS.assertThat(listOfMail.getText()).contains("тема Тест");
+        WebElement myFolders = driver.findElement(By.className("qa-LeftColumn-FolderExpander"));
+        myFolders.click();
         WebElement testFolder = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href$='folder/9']")));
         testFolder.click();
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.tagName("body")).getText().contains("тема Тест"));
+        SOFT_ASSERTIONS.assertThat(listOfMail.getText()).contains("тема Тест");
         SOFT_ASSERTIONS.assertAll();
     }
 
     @Test(priority = 2)
     public void assertArtefacts() {
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-FromText")).getText().contains("lvluphomework@yandex.ru"));
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_subject")).getText().contains("тема Тест"));
-        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText().contains("Текст письма Тест"));
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-FromText")).getText()).contains("lvluphomework@yandex.ru");
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_subject")).getText()).contains("тема Тест");
+        SOFT_ASSERTIONS.assertThat(driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText()).contains("Текст письма Тест");
         SOFT_ASSERTIONS.assertAll();
     }
 
