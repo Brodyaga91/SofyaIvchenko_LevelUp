@@ -2,9 +2,10 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="AllTests">
     <test name="Start all Selenium tests">
-        <packages>
-            <package name="ru.levelp.at.homework3"></package>
-        </packages>
-        
+        <classes>
+            <class name="ru.levelp.at.homework3.Task1Test"/>
+            <class name="ru.levelp.at.homework3.Task2Test"/>
+            <class name="ru.levelp.at.homework3.Task3Test"/>
+        </classes>
     </test>
 </suite>

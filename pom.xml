@@ -14,7 +14,7 @@
         <checkstyle.version>10.3.3</checkstyle.version>
         <testng.version>7.6.1</testng.version>
         <assertj-core.version>3.23.1</assertj-core.version>
-        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
         <selenium-java.version>4.4.0</selenium-java.version>
         <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
         <suite.base.dir>src/test/resources/</suite.base.dir>
@@ -24,9 +24,9 @@
     <profiles>
         <profile>
             <id>Negative</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+            <!--<activation>              -->
+            <!--    <activeByDefault>true</activeByDefault>      -->
+            <!--</activation> -->
             <properties>
                 <suite.name>${suite.base.dir}NegativeTestSuit.xml</suite.name>
             </properties>
