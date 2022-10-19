@@ -92,11 +92,13 @@ public class Task2Test {
         WebElement listOfMail = wait
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("mail-MessageSnippet-Content")));
         softAssertions.assertThat(listOfMail.getText()).contains("тема Тест");
-        WebElement myFolders = driver.findElement(By.className("qa-LeftColumn-FolderExpander"));
-        myFolders.click();
+        if (driver.findElement(By.cssSelector("[aria-label='Мои папки, свернуто']")).isDisplayed()) {
+            driver.findElement(By.cssSelector("[aria-label='Мои папки, свернуто']")).click();
+        }
         WebElement testFolder = wait
                 .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href$='folder/9']")));
         testFolder.click();
+
         softAssertions.assertThat(listOfMail.getText()).contains("тема Тест");
         softAssertions.assertAll();
     }

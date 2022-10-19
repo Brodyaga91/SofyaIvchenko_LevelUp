@@ -17,39 +17,36 @@
         <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
         <selenium-java.version>4.4.0</selenium-java.version>
         <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
-        <suite.base.dir>src/test/resources/</suite.base.dir>
+        <suite.base.dir>${project.basedir}/src/test/resources</suite.base.dir>
         <webdrivermanager.version>5.3.0</webdrivermanager.version>
     </properties>
 
     <profiles>
         <profile>
             <id>Negative</id>
-            <!--<activation>              -->
-            <!--    <activeByDefault>true</activeByDefault>      -->
-            <!--</activation> -->
             <properties>
-                <suite.name>${suite.base.dir}NegativeTestSuit.xml</suite.name>
+                <suite.name>NegativeTestSuit.xml</suite.name>
             </properties>
         </profile>
 
         <profile>
             <id>AllTestSuits</id>
             <properties>
-                <suite.name>${suite.base.dir}AllTestsSuit.xml</suite.name>
+                <suite.name>AllTestsSuit.xml</suite.name>
             </properties>
         </profile>
 
         <profile>
             <id>Positive</id>
             <properties>
-                <suite.name>${suite.base.dir}PositiveTestSuit.xml</suite.name>
+                <suite.name>PositiveTestSuit.xml</suite.name>
             </properties>
         </profile>
 
         <profile>
             <id>Selenium</id>
             <properties>
-                <suite.name>${suite.base.dir}AllTestsSeleniumSuite.xml</suite.name>
+                <suite.name>AllTestsSeleniumSuite.xml</suite.name>
             </properties>
         </profile>
     </profiles>
@@ -95,7 +92,7 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>${suite.base.dir}NegativeTestSuit.xml</suiteXmlFile>
+                        <suiteXmlFile>${suite.base.dir}/${suite.name}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
