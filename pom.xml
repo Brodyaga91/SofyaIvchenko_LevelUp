@@ -11,40 +11,43 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-
         <checkstyle.version>10.3.3</checkstyle.version>
         <testng.version>7.6.1</testng.version>
         <assertj-core.version>3.23.1</assertj-core.version>
-        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-
+        <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
+        <selenium-java.version>4.4.0</selenium-java.version>
         <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
-
-        <suite.base.dir>src/test/resources/</suite.base.dir>
+        <suite.base.dir>${project.basedir}/src/test/resources</suite.base.dir>
+        <webdrivermanager.version>5.3.0</webdrivermanager.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <profiles>
         <profile>
             <id>Negative</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
-                <suite.name>${suite.base.dir}NegativeTestSuit.xml</suite.name>
+                <suite.name>NegativeTestSuit.xml</suite.name>
             </properties>
         </profile>
 
         <profile>
             <id>AllTestSuits</id>
             <properties>
-                <suite.name>${suite.base.dir}AllTestsSuit.xml</suite.name>
+                <suite.name>AllTestsSuit.xml</suite.name>
             </properties>
         </profile>
-
 
         <profile>
             <id>Positive</id>
             <properties>
-                <suite.name>${suite.base.dir}PositiveTestSuit.xml</suite.name>
+                <suite.name>PositiveTestSuit.xml</suite.name>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>Selenium</id>
+            <properties>
+                <suite.name>AllTestsSeleniumSuite.xml</suite.name>
             </properties>
         </profile>
     </profiles>
@@ -64,8 +67,8 @@
                 </dependencies>
                 <configuration>
                     <configLocation>
-                        <!--  pay attention to use exact url for checkstyle plugin ruleset  -->
-                        https://raw.githubusercontent.com/khda91/leveup-code-checkers-configurations/main/checkstyle/checkstyle.xml
+                <!--  pay attention to use exact url for checkstyle plugin ruleset  -->
+                https://raw.githubusercontent.com/khda91/leveup-code-checkers-configurations/main/checkstyle/checkstyle.xml
                     </configLocation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <violationSeverity>warning</violationSeverity>
@@ -83,24 +86,22 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
-                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <suiteXmlFiles>
-                            <suiteXmlFile>${suite.base.dir}NegativeTestSuit.xml</suiteXmlFile>
-                        </suiteXmlFiles>
-                    </configuration>
-
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${suite.base.dir}/${suite.name}</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+<!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -115,6 +116,17 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium-java.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
