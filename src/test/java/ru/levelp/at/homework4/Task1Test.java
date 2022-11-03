@@ -12,36 +12,35 @@ public class Task1Test extends BaseTest {
     @Test
     public void workWithDraft()  {
 
-        var authPage = new AuthPage(driver);
+        var mainPage = new MainPage(driver);
+        mainPage.open();
+        mainPage.logoAuth();
 
-        WebElement buttonLoginMainPage = driver.findElement(By.className("dzen-header-desktop__isUnauthorized-2e"));
-        buttonLoginMainPage.click();
+        var authPage = new AuthPage(driver);
         authPage.login("lvluphomework","lvluphomework123");
-        WebElement searchTextBox = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("dzen-search-arrow-common")));
-        searchTextBox.click();
-        WebElement frame = driver.findElement(By.cssSelector("iframe.dzen-search-arrow-common__frame"));
-        driver.switchTo().frame(frame);
-        WebElement buttonMail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("home-link2")));
-        buttonMail.click();
+
+        mainPage.enterMail();
+
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(0));
         driver.close();
         driver.switchTo().window(tabs2.get(1));
         softAssertions.assertThat(driver.getTitle()).contains("Яндекс Почта");
-        WebElement writeMail = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("qa-LeftColumn-ComposeButton")));
-        writeMail.click();
-        WebElement destination = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("composeYabbles")));
-        destination.sendKeys("lvluphomework@yandex.ru");
-        WebElement subject = driver.findElement(By.className("composeTextField"));
-        subject.sendKeys("Тема письма");
-        WebElement textField = driver.findElement(By.className("cke_wysiwyg_div"));
-        textField.click();
-        textField.sendKeys("Текст письма");
-        WebElement buttonClose = driver.findElement(By.className("qa-ControlButton_button_close"));
-        buttonClose.click();
+
+        var mailboxPage = new MailboxPage(driver);
+        mailboxPage.writeMail();
+
+        //WebElement destination = wait
+        //        .until(ExpectedConditions.visibilityOfElementLocated(By.className("composeYabbles")));
+        //destination.sendKeys("lvluphomework@yandex.ru");
+        //WebElement subject = driver.findElement(By.className("composeTextField"));
+        //subject.sendKeys("Тема письма");
+        //WebElement textField = driver.findElement(By.className("cke_wysiwyg_div"));
+        //textField.click();
+        //textField.sendKeys("Текст письма");
+        //WebElement buttonClose = driver.findElement(By.className("qa-ControlButton_button_close"));
+        //buttonClose.click();
+
         WebElement draftFolder = driver.findElement(By.cssSelector("[href$='draft']"));
         draftFolder.click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span [title='Тема письма']")));

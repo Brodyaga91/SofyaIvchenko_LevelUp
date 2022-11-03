@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeMethod;
 
 public abstract class BaseTest {
 
-    private static final String URL_MAIL = "https://dzen.ru/";
+    //private static final String URL_MAIL = "https://dzen.ru/";
 
     protected WebDriver driver;
     protected WebDriverWait wait;
@@ -24,7 +24,6 @@ public abstract class BaseTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, Duration.ofMillis(10000));
-        driver.navigate().to(URL_MAIL);
     }
 
     @AfterMethod

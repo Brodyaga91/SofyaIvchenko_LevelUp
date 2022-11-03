@@ -12,18 +12,14 @@ public class Task3Test extends BaseTest {
     @Test
     public void checkInboxAndTrash() {
 
+        var mainPage = new MainPage(driver);
+        mainPage.open();
+        mainPage.logoAuth();
         var authPage = new AuthPage(driver);
-
-        WebElement buttonLoginMainPage = driver.findElement(By.className("dzen-header-desktop__isUnauthorized-2e"));
-        buttonLoginMainPage.click();
         authPage.login("lvluphomework","lvluphomework123");
-        WebElement searchTextBox = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("dzen-search-arrow-common")));
-        searchTextBox.click();
-        WebElement frame = driver.findElement(By.cssSelector("iframe.dzen-search-arrow-common__frame"));
-        driver.switchTo().frame(frame);
-        WebElement buttonMail = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("home-link2")));
-        buttonMail.click();
+
+        mainPage.enterMail();
+
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(0));
         driver.close();

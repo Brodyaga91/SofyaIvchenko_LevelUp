@@ -3,15 +3,10 @@ package ru.levelp.at.homework4;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
 
-public class AuthPage {
 
-    private final WebDriver driver;
-    private final WebDriverWait wait;
+public class AuthPage extends BasePage {
 
     @FindBy(id = "passp-field-login")
     private static WebElement loginTextBox;
@@ -25,9 +20,7 @@ public class AuthPage {
     private static WebElement typeLogin;
 
     public AuthPage(WebDriver driver) {
-        this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofMillis(10000));
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     public void login(String login, String password){
