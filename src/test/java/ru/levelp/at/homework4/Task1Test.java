@@ -30,19 +30,14 @@ public class Task1Test extends BaseTest {
         var mailboxPage = new MailboxPage(driver);
         mailboxPage.writeMail();
 
-        //WebElement destination = wait
-        //        .until(ExpectedConditions.visibilityOfElementLocated(By.className("composeYabbles")));
-        //destination.sendKeys("lvluphomework@yandex.ru");
-        //WebElement subject = driver.findElement(By.className("composeTextField"));
-        //subject.sendKeys("Тема письма");
-        //WebElement textField = driver.findElement(By.className("cke_wysiwyg_div"));
-        //textField.click();
-        //textField.sendKeys("Текст письма");
-        //WebElement buttonClose = driver.findElement(By.className("qa-ControlButton_button_close"));
-        //buttonClose.click();
+        var mailPage = new MailPage(driver);
+        mailPage.fillDestination("lvluphomework@yandex.ru");
+        mailPage.fillSubject("Тема письма");
+        mailPage.fillTextField("Текст письма");
+        mailPage.closeMailForm();
 
-        WebElement draftFolder = driver.findElement(By.cssSelector("[href$='draft']"));
-        draftFolder.click();
+        mailboxPage.switchToDrafts();
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span [title='Тема письма']")));
         softAssertions.assertThat(driver.findElement(By.tagName("body")).getText()).contains("Тема письма");
         softAssertions.assertThat(
@@ -53,30 +48,30 @@ public class Task1Test extends BaseTest {
         softAssertions.assertThat(
                 driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText())
                 .contains("Текст письма");
-        WebElement myMail = driver.findElement(By.className("mail-MessageSnippet-Item_subject"));
-        myMail.click();
-        WebElement sendMail = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("ComposeSendButton")));
-        sendMail.click();
-        WebElement closeFrame = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("ComposeDoneScreen-Actions")));
-        closeFrame.click();
-        draftFolder.click();
-        softAssertions.assertThat(driver
-                .findElement(By.className("ns-view-messages-empty")).getText())
+
+        mailboxPage.fallIntoMail();
+
+        mailPage.sendMail();
+
+        var frameWaitPage = new FrameWaitPage(driver);
+        frameWaitPage.closeFrame();
+
+        mailboxPage.switchToDrafts();
+
+        softAssertions.assertThat(mailboxPage.getEmptyDraft().getText())
                 .contains("В папке «Черновики» нет писем");
-        WebElement sentFolder = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[href$='sent']")));
-        sentFolder.click();
+
+        mailboxPage.switchToSent();
+
         driver.navigate().refresh();
-        WebElement listOfSent = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("mail-MessageSnippet-Content")));
-        softAssertions.assertThat(listOfSent.getText()).contains("Тема письма");
-        WebElement avatar = wait.until(ExpectedConditions.elementToBeClickable(By.className("user-account")));
-        avatar.click();
-        WebElement logOut = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("legouser__menu-item_action_exit")));
-        logOut.click();
+
+        softAssertions.assertThat(mailboxPage.getListOfSent().getText()).contains("Тема письма");
+
+        mailboxPage.clickAvatar();
+
+        var popUpMenuPage = new PopUpMenuPage(driver);
+        popUpMenuPage.logOut();
+
         softAssertions.assertAll();
     }
 }

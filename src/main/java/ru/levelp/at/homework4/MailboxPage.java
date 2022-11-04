@@ -13,11 +13,55 @@ public class MailboxPage extends BasePage{
     }
 
     @FindBy(className="qa-LeftColumn-ComposeButton")
-        private static WebElement writeMail;
+    private static WebElement writeMail;
+
+    @FindBy(css="[href$='draft']")
+    private static WebElement draftFolder;
+
+    @FindBy(className="mail-MessageSnippet-Item_subject")
+    private static WebElement myMail;
+
+    @FindBy(className="ns-view-messages-empty")
+    private static WebElement emptyDraft;
+
+    @FindBy(css="[href$='sent']")
+    private static WebElement sentFolder;
+
+    @FindBy(className="mail-MessageSnippet-Content")
+    private static WebElement listOfSent;
+
+    @FindBy(className="user-account")
+    private static WebElement avatar;
+
+    public WebElement getListOfSent() {
+        wait.until(ExpectedConditions.visibilityOf(listOfSent));
+        return listOfSent;
+    }
+
+    public WebElement getEmptyDraft() {
+        wait.until(ExpectedConditions.visibilityOf(emptyDraft));
+        return emptyDraft;
+    }
 
     public void writeMail(){
-        wait
-            .until(ExpectedConditions.visibilityOf(writeMail)).click();
+        wait.until(ExpectedConditions.visibilityOf(writeMail)).click();
     }
+
+    public void switchToDrafts(){
+        draftFolder.click();
+    }
+
+    public void fallIntoMail(){
+        myMail.click();
+    }
+
+    public void switchToSent(){
+        sentFolder.click();
+    }
+
+    public void clickAvatar(){
+        avatar.click();
+    }
+
 
 }

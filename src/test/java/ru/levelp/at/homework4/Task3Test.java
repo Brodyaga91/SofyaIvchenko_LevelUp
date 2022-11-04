@@ -25,20 +25,16 @@ public class Task3Test extends BaseTest {
         driver.close();
         driver.switchTo().window(tabs2.get(1));
         softAssertions.assertThat(driver.getTitle()).contains("Яндекс Почта");
-        WebElement writeMail = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("qa-LeftColumn-ComposeButton")));
-        writeMail.click();
-        WebElement destination = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("composeYabbles")));
-        destination.sendKeys("lvluphomework@yandex.ru");
-        WebElement subject = driver.findElement(By.className("composeTextField"));
-        subject.sendKeys("тема Задание 3");
-        WebElement textField = driver.findElement(By.className("cke_wysiwyg_div"));
-        textField.click();
-        textField.sendKeys("Текст письма Задание 3");
-        WebElement sendMail = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("ComposeSendButton")));
-        sendMail.click();
+
+        var mailboxPage = new MailboxPage(driver);
+        mailboxPage.writeMail();
+
+        var mailPage = new MailPage(driver);
+        mailPage.fillDestination("lvluphomework@yandex.ru");
+        mailPage.fillSubject("тема Задание 3");
+        mailPage.fillTextField("Текст письма Задание 3");
+        mailPage.sendMail();
+
         WebElement closeFrame = wait
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("ComposeDoneScreen-Actions")));
         closeFrame.click();

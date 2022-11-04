@@ -10,6 +10,18 @@ public class MailPage extends BasePage{
     @FindBy(className="composeYabbles")
     private static WebElement destination;
 
+    @FindBy(className="composeTextField")
+    private static WebElement subject;
+
+    @FindBy(className="cke_wysiwyg_div")
+    private static WebElement textField;
+
+    @FindBy(className="ComposeSendButton")
+    private static WebElement sendMail;
+
+    @FindBy(className="qa-ControlButton_button_close")
+    private static WebElement buttonClose;
+
     public MailPage(WebDriver driver) {
         super(driver);
     }
@@ -18,12 +30,22 @@ public class MailPage extends BasePage{
         wait.until(ExpectedConditions.visibilityOf(destination)).sendKeys(destinationText);
     }
 
+    public void fillSubject(String subjectText){
+        subject.sendKeys(subjectText);
+    }
 
-    //WebElement subject = driver.findElement(By.className("composeTextField"));
-    //subject.sendKeys("Тема письма");
-    //WebElement textField = driver.findElement(By.className("cke_wysiwyg_div"));
-    //textField.click();
-    //textField.sendKeys("Текст письма");
-    //WebElement buttonClose = driver.findElement(By.className("qa-ControlButton_button_close"));
-    //buttonClose.click();
+    public void fillTextField(String textOfMail){
+        textField.click();
+        textField.sendKeys(textOfMail);
+    }
+
+    public void closeMailForm(){
+        buttonClose.click();
+    }
+
+    public void sendMail(){
+        wait.until(ExpectedConditions.visibilityOf(sendMail)).click();
+    }
+
+
 }
