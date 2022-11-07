@@ -28,14 +28,62 @@ public class MailboxPage extends BasePage{
     private static WebElement sentFolder;
 
     @FindBy(className="mail-MessageSnippet-Content")
-    private static WebElement listOfSent;
+    private static WebElement listOfMails;
 
     @FindBy(className="user-account")
     private static WebElement avatar;
 
-    public WebElement getListOfSent() {
-        wait.until(ExpectedConditions.visibilityOf(listOfSent));
-        return listOfSent;
+    @FindBy(css="[aria-label='Мои папки, свернуто']")
+    private static WebElement customFolderCollapse;
+
+    @FindBy(css="[href$='folder/9']")
+    private static WebElement testFolder;
+
+    @FindBy(className="mail-MessageSnippet-FromText")
+    private static WebElement fromWhom;
+
+    @FindBy(className="mail-MessageSnippet-Item_subject")
+    private static WebElement subjectOfMail;
+
+    @FindBy(className="mail-MessageSnippet-Item_firstline")
+    private static WebElement textOfMail;
+
+    @FindBy(css="span[title='lvluphomework@yandex.ru']")
+    private static WebElement sender;
+
+    @FindBy(className="_nb-checkbox-normal-flag")
+    private static WebElement checkBox;
+
+    @FindBy(className="ns-view-toolbar-button-delete")
+    private static WebElement buttonDelete;
+
+    @FindBy(css="[href$='trash']")
+    private static WebElement folderTrash;
+
+    public static WebElement getSender() {
+        return sender;
+    }
+
+    public  WebElement getFromWhom() {
+        wait.until(ExpectedConditions.visibilityOf(fromWhom));
+        return fromWhom;
+    }
+
+    public static WebElement getSubjectOfMail() {
+        return subjectOfMail;
+    }
+
+    public static WebElement getTextOfMail() {
+        return textOfMail;
+    }
+
+    public  WebElement getCustomFolderCollapse() {
+        return customFolderCollapse;
+    }
+
+    public WebElement getListOfMails() {
+        wait.until(ExpectedConditions.visibilityOf(listOfMails));
+        return listOfMails;
     }
 
     public WebElement getEmptyDraft() {
@@ -43,8 +91,30 @@ public class MailboxPage extends BasePage{
         return emptyDraft;
     }
 
+    public void clickFolderTrash(){
+        wait.until(ExpectedConditions.visibilityOf(folderTrash));
+        folderTrash.click();
+    }
+
+    public void clickDelete(){
+        wait.until(ExpectedConditions.elementToBeClickable(buttonDelete));
+        buttonDelete.click();
+    }
+
+    public void clickCheckBox(){
+        checkBox.click();
+    }
+
+    public void clickCustomFolderCollapse() {
+        customFolderCollapse.click();
+    }
+
     public void writeMail(){
         wait.until(ExpectedConditions.visibilityOf(writeMail)).click();
+    }
+
+    public void switchToTestFolder(){
+        testFolder.click();
     }
 
     public void switchToDrafts(){

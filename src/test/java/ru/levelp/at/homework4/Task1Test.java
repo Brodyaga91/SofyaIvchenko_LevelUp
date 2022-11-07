@@ -40,13 +40,10 @@ public class Task1Test extends BaseTest {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span [title='Тема письма']")));
         softAssertions.assertThat(driver.findElement(By.tagName("body")).getText()).contains("Тема письма");
-        softAssertions.assertThat(
-                driver.findElement(By.className("mail-MessageSnippet-FromText")).getText())
+        softAssertions.assertThat(mailboxPage.getFromWhom().getText())
                 .contains("lvluphomework@yandex.ru");
-        softAssertions.assertThat(
-                driver.findElement(By.className("mail-MessageSnippet-Item_subject")).getText()).contains("Тема письма");
-        softAssertions.assertThat(
-                driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText())
+        softAssertions.assertThat(mailboxPage.getSubjectOfMail().getText()).contains("Тема письма");
+        softAssertions.assertThat(mailboxPage.getTextOfMail().getText())
                 .contains("Текст письма");
 
         mailboxPage.fallIntoMail();
@@ -65,7 +62,7 @@ public class Task1Test extends BaseTest {
 
         driver.navigate().refresh();
 
-        softAssertions.assertThat(mailboxPage.getListOfSent().getText()).contains("Тема письма");
+        softAssertions.assertThat(mailboxPage.getListOfMails().getText()).contains("Тема письма");
 
         mailboxPage.clickAvatar();
 

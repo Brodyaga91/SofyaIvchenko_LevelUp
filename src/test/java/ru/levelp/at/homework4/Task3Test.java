@@ -35,35 +35,30 @@ public class Task3Test extends BaseTest {
         mailPage.fillTextField("Текст письма Задание 3");
         mailPage.sendMail();
 
-        WebElement closeFrame = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("ComposeDoneScreen-Actions")));
-        closeFrame.click();
+        var frameWaitPage = new FrameWaitPage(driver);
+        frameWaitPage.closeFrame();
+
         driver.navigate().refresh();
-        WebElement listOfSent = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("mail-MessageSnippet-Content")));
-        softAssertions.assertThat(listOfSent.getText()).contains("тема Задание 3");
-        softAssertions.assertThat(
-                driver.findElement(By.cssSelector("span[title='lvluphomework@yandex.ru']")).getAttribute("title"))
+
+        softAssertions.assertThat(mailboxPage.getListOfMails().getText()).contains("тема Задание 3");
+        softAssertions.assertThat(mailboxPage.getSender().getAttribute("title"))
                 .isEqualTo("lvluphomework@yandex.ru");
-        softAssertions.assertThat(
-                driver.findElement(By.className("mail-MessageSnippet-Item_subject")).getText())
+        softAssertions.assertThat(mailboxPage.getSubjectOfMail().getText())
                 .contains("тема Задание 3");
-        softAssertions.assertThat(
-                driver.findElement(By.className("mail-MessageSnippet-Item_firstline")).getText())
+        softAssertions.assertThat(mailboxPage.getTextOfMail().getText())
                 .contains("Текст письма Задание 3");
-        WebElement checkBox = driver.findElement(By.className("_nb-checkbox-normal-flag"));
-        checkBox.click();
-        WebElement buttonDelete = wait
-                .until(ExpectedConditions.elementToBeClickable(By.className("ns-view-toolbar-button-delete")));
-        buttonDelete.click();
-        WebElement folderTrash = driver.findElement(By.cssSelector("[href$='trash']"));
-        folderTrash.click();
-        softAssertions.assertThat(listOfSent.getText()).contains("тема Задание 3");
-        WebElement avatar = wait.until(ExpectedConditions.elementToBeClickable(By.className("user-account")));
-        avatar.click();
-        WebElement logOut = wait
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("legouser__menu-item_action_exit")));
-        logOut.click();
+
+        mailboxPage.clickCheckBox();
+        mailboxPage.clickDelete();
+        mailboxPage.clickFolderTrash();
+
+        softAssertions.assertThat(mailboxPage.getListOfMails().getText()).contains("тема Задание 3");
+
+        mailboxPage.clickAvatar();
+
+        var popUpMenuPage = new PopUpMenuPage(driver);
+        popUpMenuPage.logOut();
+
         softAssertions.assertAll();
     }
 }
