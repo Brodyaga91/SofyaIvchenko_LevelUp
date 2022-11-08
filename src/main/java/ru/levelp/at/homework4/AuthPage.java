@@ -23,12 +23,12 @@ public class AuthPage extends BasePage {
         super(driver);
     }
 
-    public void login(String login, String password){
+    public void login(String login, String password) {
         wait.until(ExpectedConditions.visibilityOf(typeLogin)).click();
         loginTextBox.sendKeys(login);
         buttonLogin.click();
-        wait.until(ExpectedConditions.visibilityOf( passwordTextBox )).sendKeys(password);
-        wait.until(ExpectedConditions.visibilityOf( buttonLoginRefresh )).click();
+        wait.until(ExpectedConditions.visibilityOf(passwordTextBox)).sendKeys(password);
+        wait.until(ExpectedConditions.visibilityOf(buttonLoginRefresh)).click();
 
 
     }

@@ -26,7 +26,7 @@ public abstract class BaseTest {
         wait = new WebDriverWait(driver, Duration.ofMillis(10000));
     }
 
-
+    @AfterMethod
     public void finishDriver() {
         driver.quit();
     }

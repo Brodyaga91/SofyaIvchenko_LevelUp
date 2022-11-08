@@ -6,13 +6,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class MainPage extends BasePage{
+public class MainPage extends BasePage {
     private static final String URL_MAIL = "https://dzen.ru/";
 
-    @FindBy(className="dzen-header-desktop__isUnauthorized-2e")
+    @FindBy(className = "dzen-header-desktop__isUnauthorized-2e")
     private static WebElement buttonLoginMainPage;
 
-    @FindBy(className="dzen-search-arrow-common")
+    @FindBy(className = "dzen-search-arrow-common")
     private static WebElement searchTextBox;
 
     @FindBy(css = "iframe.dzen-search-arrow-common__frame")
@@ -25,15 +25,15 @@ public class MainPage extends BasePage{
         super(driver);
     }
 
-    public void open(){
+    public void open() {
         driver.navigate().to(URL_MAIL);
     }
 
-    public void logoAuth(){
+    public void logoAuth() {
         buttonLoginMainPage.click();
     }
 
-    public void enterMail(){
+    public void enterMail() {
         wait.until(ExpectedConditions.visibilityOf(searchTextBox)).click();
         driver.switchTo().frame(frame);
         wait.until(ExpectedConditions.visibilityOf(buttonMail)).click();

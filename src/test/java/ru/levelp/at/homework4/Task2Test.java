@@ -1,11 +1,7 @@
 package ru.levelp.at.homework4;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.Test;
 import java.util.ArrayList;
-
+import org.testng.annotations.Test;
 
 public class Task2Test extends BaseTest {
 
@@ -17,7 +13,7 @@ public class Task2Test extends BaseTest {
         mainPage.open();
         mainPage.logoAuth();
         var authPage = new AuthPage(driver);
-        authPage.login(TestConfiguration.TEST_LOGIN,TestConfiguration.TEST_PASS);
+        authPage.login(TestConfiguration.TEST_LOGIN, TestConfiguration.TEST_PASS);
 
         mainPage.enterMail();
 

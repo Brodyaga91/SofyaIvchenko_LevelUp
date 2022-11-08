@@ -1,72 +1,71 @@
 package ru.levelp.at.homework4;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class MailboxPage extends BasePage{
+public class MailboxPage extends BasePage {
 
     public MailboxPage(WebDriver driver) {
         super(driver);
     }
 
-    @FindBy(className="qa-LeftColumn-ComposeButton")
+    @FindBy(className = "qa-LeftColumn-ComposeButton")
     private static WebElement writeMail;
 
-    @FindBy(css="[href$='draft']")
+    @FindBy(css = "[href$='draft']")
     private static WebElement draftFolder;
 
-    @FindBy(className="mail-MessageSnippet-Item_subject")
+    @FindBy(className = "mail-MessageSnippet-Item_subject")
     private static WebElement myMail;
 
-    @FindBy(className="ns-view-messages-empty")
+    @FindBy(className = "ns-view-messages-empty")
     private static WebElement emptyDraft;
 
-    @FindBy(css="[href$='sent']")
+    @FindBy(css = "[href$='sent']")
     private static WebElement sentFolder;
 
-    @FindBy(className="mail-MessageSnippet-Content")
+    @FindBy(className = "mail-MessageSnippet-Content")
     private static WebElement listOfMails;
 
-    @FindBy(className="user-account")
+    @FindBy(className = "user-account")
     private static WebElement avatar;
 
-    @FindBy(css="[aria-label='Мои папки, свернуто']")
+    @FindBy(css = "[aria-label='Мои папки, свернуто']")
     private static WebElement customFolderCollapse;
 
-    @FindBy(css="[href$='folder/9']")
+    @FindBy(css = "[href$='folder/9']")
     private static WebElement testFolder;
 
-    @FindBy(className="mail-MessageSnippet-FromText")
+    @FindBy(className = "mail-MessageSnippet-FromText")
     private static WebElement fromWhom;
 
-    @FindBy(className="mail-MessageSnippet-Item_subject")
+    @FindBy(className = "mail-MessageSnippet-Item_subject")
     private static WebElement subjectOfMail;
 
-    @FindBy(className="mail-MessageSnippet-Item_firstline")
+    @FindBy(className = "mail-MessageSnippet-Item_firstline")
     private static WebElement textOfMail;
 
-    @FindBy(css="span[title='lvluphomework@yandex.ru']")
+    @FindBy(css = "span[title='lvluphomework@yandex.ru']")
     private static WebElement sender;
 
-    @FindBy(className="_nb-checkbox-normal-flag")
+    @FindBy(className = "_nb-checkbox-normal-flag")
     private static WebElement checkBox;
 
-    @FindBy(className="ns-view-toolbar-button-delete")
+    @FindBy(className = "ns-view-toolbar-button-delete")
     private static WebElement buttonDelete;
 
-    @FindBy(css="[href$='trash']")
+    @FindBy(css = "[href$='trash']")
     private static WebElement folderTrash;
 
-    @FindBy(css="span [title='Тема письма']")
+    @FindBy(css = "span [title='Тема письма']")
     private static WebElement renderingOfPage;
 
     @FindBy(tagName = "body")
     private static WebElement body;
 
-    public static WebElement getSender() {
+    public WebElement getSender() {
         return sender;
     }
 
@@ -75,11 +74,11 @@ public class MailboxPage extends BasePage{
         return fromWhom;
     }
 
-    public static WebElement getSubjectOfMail() {
+    public WebElement getSubjectOfMail() {
         return subjectOfMail;
     }
 
-    public static WebElement getTextOfMail() {
+    public WebElement getTextOfMail() {
         return textOfMail;
     }
 
@@ -97,17 +96,17 @@ public class MailboxPage extends BasePage{
         return emptyDraft;
     }
 
-    public void clickFolderTrash(){
+    public void clickFolderTrash() {
         wait.until(ExpectedConditions.visibilityOf(folderTrash));
         folderTrash.click();
     }
 
-    public void clickDelete(){
+    public void clickDelete() {
         wait.until(ExpectedConditions.elementToBeClickable(buttonDelete));
         buttonDelete.click();
     }
 
-    public void clickCheckBox(){
+    public void clickCheckBox() {
         checkBox.click();
     }
 
@@ -115,31 +114,31 @@ public class MailboxPage extends BasePage{
         customFolderCollapse.click();
     }
 
-    public void writeMail(){
+    public void writeMail() {
         wait.until(ExpectedConditions.visibilityOf(writeMail)).click();
     }
 
-    public void switchToTestFolder(){
+    public void switchToTestFolder() {
         testFolder.click();
     }
 
-    public void switchToDrafts(){
+    public void switchToDrafts() {
         draftFolder.click();
     }
 
-    public void fallIntoMail(){
+    public void fallIntoMail() {
         myMail.click();
     }
 
-    public void switchToSent(){
+    public void switchToSent() {
         sentFolder.click();
     }
 
-    public void clickAvatar(){
+    public void clickAvatar() {
         avatar.click();
     }
 
-    public WebElement getBody(){
+    public WebElement getBody() {
         wait.until(ExpectedConditions.visibilityOf(renderingOfPage));
         return body;
 

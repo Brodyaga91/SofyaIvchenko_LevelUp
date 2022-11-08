@@ -1,9 +1,6 @@
 package ru.levelp.at.homework4;
 
 import java.util.ArrayList;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 
 
@@ -16,7 +13,7 @@ public class Task3Test extends BaseTest {
         mainPage.open();
         mainPage.logoAuth();
         var authPage = new AuthPage(driver);
-        authPage.login(TestConfiguration.TEST_LOGIN,TestConfiguration.TEST_PASS);
+        authPage.login(TestConfiguration.TEST_LOGIN, TestConfiguration.TEST_PASS);
 
         mainPage.enterMail();
 
