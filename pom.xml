@@ -54,7 +54,7 @@
         <profile>
             <id>SeleniumPageObject</id>
             <properties>
-                <suite.name>AllTestsSeleniumSuite.xml</suite.name>
+                <suite.name>PageObjectSeleniumSuite.xml</suite.name>
             </properties>
         </profile>
     </profiles>

@@ -60,6 +60,12 @@ public class MailboxPage extends BasePage{
     @FindBy(css="[href$='trash']")
     private static WebElement folderTrash;
 
+    @FindBy(css="span [title='Тема письма']")
+    private static WebElement renderingOfPage;
+
+    @FindBy(tagName = "body")
+    private static WebElement body;
+
     public static WebElement getSender() {
         return sender;
     }
@@ -131,6 +137,12 @@ public class MailboxPage extends BasePage{
 
     public void clickAvatar(){
         avatar.click();
+    }
+
+    public WebElement getBody(){
+        wait.until(ExpectedConditions.visibilityOf(renderingOfPage));
+        return body;
+
     }
 
 

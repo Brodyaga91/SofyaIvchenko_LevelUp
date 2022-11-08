@@ -3,9 +3,9 @@
 <suite name="AllTests">
     <test name="Start Page Object Selenium tests">
         <classes>
-            <class name="ru.levelp.at.homework3.Task1Test"/>
-            <class name="ru.levelp.at.homework3.Task2Test"/>
-            <class name="ru.levelp.at.homework3.Task3Test"/>
+            <class name="ru.levelp.at.homework4.Task1Test"/>
+            <class name="ru.levelp.at.homework4.Task2Test"/>
+            <class name="ru.levelp.at.homework4.Task3Test"/>
         </classes>
     </test>
 </suite>

@@ -17,7 +17,7 @@ public class Task2Test extends BaseTest {
         mainPage.open();
         mainPage.logoAuth();
         var authPage = new AuthPage(driver);
-        authPage.login("lvluphomework","lvluphomework123");
+        authPage.login(TestConfiguration.TEST_LOGIN,TestConfiguration.TEST_PASS);
 
         mainPage.enterMail();
 
@@ -31,9 +31,9 @@ public class Task2Test extends BaseTest {
         mailboxPage.writeMail();
 
         var mailPage = new MailPage(driver);
-        mailPage.fillDestination("lvluphomework@yandex.ru");
-        mailPage.fillSubject("тема Тест");
-        mailPage.fillTextField("Текст письма Тест");
+        mailPage.fillDestination(TestConfiguration.TEST_EMAIL);
+        mailPage.fillSubject(TestConfiguration.TEST_SUBJECT2);
+        mailPage.fillTextField(TestConfiguration.TEST_TEXT2);
         mailPage.sendMail();
 
         var frameWaitPage = new FrameWaitPage(driver);
@@ -43,7 +43,7 @@ public class Task2Test extends BaseTest {
 
         driver.navigate().refresh();
 
-        softAssertions.assertThat(mailboxPage.getListOfMails().getText()).contains("тема Тест");
+        softAssertions.assertThat(mailboxPage.getListOfMails().getText()).contains(TestConfiguration.TEST_SUBJECT2);
 
         if (mailboxPage.getCustomFolderCollapse().isDisplayed()) {
             mailboxPage.clickCustomFolderCollapse();
@@ -51,14 +51,14 @@ public class Task2Test extends BaseTest {
 
         mailboxPage.switchToTestFolder();
 
-        softAssertions.assertThat(mailboxPage.getListOfMails().getText()).contains("тема Тест");
+        softAssertions.assertThat(mailboxPage.getListOfMails().getText()).contains(TestConfiguration.TEST_SUBJECT2);
         softAssertions.assertThat(mailboxPage.getFromWhom().getText())
-                .contains("lvluphomework@yandex.ru");
+                .contains(TestConfiguration.TEST_EMAIL);
         softAssertions.assertThat(mailboxPage.getSubjectOfMail()
-                .getText()).contains("тема Тест");
+                .getText()).contains(TestConfiguration.TEST_SUBJECT2);
         softAssertions.assertThat(
                           mailboxPage.getTextOfMail().getText())
-                .contains("Текст письма Тест");
+                .contains(TestConfiguration.TEST_TEXT2);
 
         mailboxPage.clickAvatar();
 
