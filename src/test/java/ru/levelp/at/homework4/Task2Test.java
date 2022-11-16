@@ -13,7 +13,7 @@ public class Task2Test extends BaseTest {
         mainPage.open();
         mainPage.logoAuth();
         var authPage = new AuthPage(driver);
-        authPage.login(TestConfiguration.TEST_LOGIN, TestConfiguration.TEST_PASS);
+        authPage.login(GetProperty.getProperty("TEST_LOGIN"), GetProperty.getProperty("TEST_PASS"));
 
         mainPage.enterMail();
 
@@ -27,7 +27,7 @@ public class Task2Test extends BaseTest {
         mailboxPage.writeMail();
 
         var mailPage = new MailPage(driver);
-        mailPage.fillDestination(TestConfiguration.TEST_EMAIL);
+        mailPage.fillDestination(GetProperty.getProperty("TEST_EMAIL"));
         mailPage.fillSubject(TestConfiguration.TEST_SUBJECT2);
         mailPage.fillTextField(TestConfiguration.TEST_TEXT2);
         mailPage.sendMail();
@@ -49,7 +49,7 @@ public class Task2Test extends BaseTest {
 
         softAssertions.assertThat(mailboxPage.getListOfMails().getText()).contains(TestConfiguration.TEST_SUBJECT2);
         softAssertions.assertThat(mailboxPage.getFromWhom().getText())
-                .contains(TestConfiguration.TEST_EMAIL);
+                .contains(GetProperty.getProperty("TEST_EMAIL"));
         softAssertions.assertThat(mailboxPage.getSubjectOfMail()
                 .getText()).contains(TestConfiguration.TEST_SUBJECT2);
         softAssertions.assertThat(
