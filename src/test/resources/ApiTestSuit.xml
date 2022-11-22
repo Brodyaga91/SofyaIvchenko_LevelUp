@@ -2,8 +2,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="AllTests">
     <test name="Start all tests">
-        <classes>
-            <class name="ru.levelp.at.homework6.go.rests.users.UsersGetTest"/>
-        </classes>
+        <packages>
+            <package name="homework6"/>
+        </packages>
     </test>
 </suite>
