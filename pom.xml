@@ -50,6 +50,13 @@
                 <suite.name>AllTestsSeleniumSuite.xml</suite.name>
             </properties>
         </profile>
+
+        <profile>
+            <id>SeleniumPageObject</id>
+            <properties>
+                <suite.name>PageObjectSeleniumSuite.xml</suite.name>
+            </properties>
+        </profile>
     </profiles>
 
     <build>
