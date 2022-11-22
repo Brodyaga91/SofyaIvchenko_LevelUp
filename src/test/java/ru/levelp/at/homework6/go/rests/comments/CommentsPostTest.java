@@ -1,15 +1,15 @@
-package ru.levelp.at.homework6.go.rests.users;
+package ru.levelp.at.homework6.go.rests.comments;
 
 import io.restassured.RestAssured;
-import org.testng.annotations.Test;
 import io.restassured.http.ContentType;
+import org.testng.annotations.Test;
 
-public class UsersPostTest {
+public class CommentsPostTest {
 
     String bearerToken = "98536256fe8c96313bf8ec05dd0763e8ab3676056d6fbf3ccc767f7aa89a5c29";
 
     @Test
-    void createNewUser(){
+    void CreateNewUser(){
         RestAssured
             .given()
             .header("Authorization", "Bearer " + bearerToken)
@@ -25,19 +25,4 @@ public class UsersPostTest {
             .log().all()
             .statusCode(201);
     }
-
-    @Test
-    void failAuth(){}
-
-    @Test
-    void incorrectName(){}
-
-    @Test
-    void incorrectEmail(){}
-
-    @Test
-    void incorrectGender(){}
-
-    @Test
-    void incorrectStatus(){}
 }

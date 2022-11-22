@@ -1,20 +1,20 @@
-package ru.levelp.at.homework6.go.rests.users;
+package ru.levelp.at.homework6.go.rests.posts;
 
 import io.restassured.RestAssured;
+import java.util.List;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import ru.levelp.at.homework6.go.rests.BaseApiTest;
 import ru.levelp.at.homework6.go.rests.CreateTestData;
-import java.util.List;
 
-public class UsersGetTest extends BaseApiTest {
+public class PostsGetTest extends BaseApiTest {
 
     @Test
     void getOnePerson(){
         RestAssured
             .given()
             .spec(requestSpecification)
-            .pathParam("userId", CreateTestData.createTestData())
+            .pathParam("userId", CreateTestData.id)
             .when()
             .get("https://gorest.co.in/public/v2/users/{userId}")
             .then()

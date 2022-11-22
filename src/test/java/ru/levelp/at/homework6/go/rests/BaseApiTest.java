@@ -10,8 +10,11 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import org.hamcrest.Matchers;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import io.restassured.http.ContentType;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.any;
@@ -19,12 +22,13 @@ import static org.hamcrest.Matchers.equalTo;
 
 public abstract class BaseApiTest {
 
-    protected RequestSpecification requestSpecification;
-    protected ResponseSpecification responseSpecification;
+    protected static RequestSpecification requestSpecification;
+    protected static ResponseSpecification responseSpecification;
     String bearerToken = "98536256fe8c96313bf8ec05dd0763e8ab3676056d6fbf3ccc767f7aa89a5c29";
 
-    @BeforeMethod
-    public void createTestData(){
+
+    @BeforeSuite
+    public void createTestSpec(){
 
         requestSpecification = new RequestSpecBuilder()
             .log(LogDetail.ALL)
@@ -36,21 +40,9 @@ public abstract class BaseApiTest {
             .log(LogDetail.ALL)
             .build();
 
-        String id = given()
-            .spec(requestSpecification)
-            .body("{\"name\": \"Rageswari Prajapat\",\n"
-                + "        \"email\": \"rageswari_prajapat@reynolds-sipes.org\",\n"
-                + "        \"gender\": \"male\",\n"
-                + "        \"status\": \"inactive\"}")
-            .when()
-            .post("https://gorest.co.in/public/v2/users")
-            .then()
-            .spec(responseSpecification)
-            .statusCode(201)
-            .extract()
-            .body().jsonPath().getString("data.id");
 
 
+    }
 
-                }
+
 }
