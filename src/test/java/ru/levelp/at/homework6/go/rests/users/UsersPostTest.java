@@ -18,7 +18,7 @@ public class UsersPostTest extends BaseApiTest {
                 + "        \"gender\": \"male\",\n"
                 + "        \"status\": \"inactive\"}")
             .when()
-            .post("https://gorest.co.in/public/v2/users")
+            .post("/users")
             .then()
             .spec(responseSpecification)
             .statusCode(201);
@@ -35,9 +35,9 @@ public class UsersPostTest extends BaseApiTest {
                 + "        \"gender\": \"male\",\n"
                 + "        \"status\": \"inactive\"}")
             .when()
-            .post("https://gorest.co.in/public/v2/users")
+            .post("/users")
             .then()
-            .spec(failAuthRespSpecification());
+            .spec(failRespSpecification());
     }
 
     @Test

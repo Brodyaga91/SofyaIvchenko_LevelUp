@@ -5,7 +5,7 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import ru.levelp.at.homework6.go.rests.BaseApiTest;
-import ru.levelp.at.homework6.go.rests.CreateTestData;
+import ru.levelp.at.homework6.go.rests.TestData;
 
 public class CommentsGetTest extends BaseApiTest {
 
@@ -14,7 +14,7 @@ public class CommentsGetTest extends BaseApiTest {
         RestAssured
             .given()
             .spec(requestSpecification)
-            .pathParam("userId", CreateTestData.id)
+            .pathParam("userId", TestData.id)
             .when()
             .get("https://gorest.co.in/public/v2/users/{userId}")
             .then()

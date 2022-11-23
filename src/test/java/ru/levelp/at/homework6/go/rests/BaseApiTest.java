@@ -6,6 +6,7 @@ import io.restassured.specification.ResponseSpecification;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
+import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.testng.annotations.BeforeMethod;
 import io.restassured.http.ContentType;
@@ -26,6 +27,8 @@ public abstract class BaseApiTest {
 
         requestSpecification = new RequestSpecBuilder()
             .log(LogDetail.ALL)
+            .setBaseUri(RestAssured.baseURI)
+            .setBasePath(RestAssured.basePath)
             .addHeader("Authorization", "Bearer " + bearerToken)
             .setContentType(ContentType.JSON)
             .build();
@@ -36,11 +39,19 @@ public abstract class BaseApiTest {
 
     }
 
-    public ResponseSpecification failAuthRespSpecification(){
+    public ResponseSpecification failRespSpecification(){
         return new ResponseSpecBuilder()
-            .expectStatusCode(401)
-            .expectBody("message", Matchers.equalTo("Authentication failed"))
-            .log(LogDetail.ALL)
+            .expectStatusCode(HttpStatus.SC_NOT_FOUND)
+            .expectBody("message", Matchers.equalTo("Resource not found"))
+            .addResponseSpecification(responseSpecification)
+            .build();
+    }
+
+    public ResponseSpecification blankFieldRespSpecification(){
+        return new ResponseSpecBuilder()
+            .expectStatusCode(HttpStatus.SC_UNPROCESSABLE_ENTITY)
+            .expectBody("message", Matchers.contains("can't be blank"))
+            .addResponseSpecification(responseSpecification)
             .build();
     }
 
