@@ -2,6 +2,7 @@ package ru.levelp.at.homework6.go.rests.posts;
 
 import io.restassured.RestAssured;
 import java.util.List;
+import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import ru.levelp.at.homework6.go.rests.BaseApiTest;
@@ -10,45 +11,46 @@ import ru.levelp.at.homework6.go.rests.TestData;
 public class PostsGetTest extends BaseApiTest {
 
     @Test
-    void getOnePerson(){
+    void getOnePost(){
         RestAssured
             .given()
             .spec(requestSpecification)
-            .pathParam("userId", TestData.id)
+            .pathParam("postId", TestData.createTestPost())
             .when()
-            .get("https://gorest.co.in/public/v2/users/{userId}")
+            .get("/posts/{postId}")
             .then()
             .spec(responseSpecification)
             .statusCode(200)
-            .body("name", Matchers.equalTo("Ekaling Agarwal"))
-            .body("email", Matchers.equalTo("ekaling_agarwal@cruickshank.net"))
-            .body("gender", Matchers.equalTo("female"))
-            .body("status", Matchers.equalTo("active"));
-    }
+            .body("user_id", Matchers.equalTo(GenerationPost.user_id))
+            .body("title", Matchers.equalTo(GenerationPost.title))
+            .body("body", Matchers.equalTo(GenerationPost.body));
 
-    @Test //не работает
-    void getPersons(){
-        RestAssured
-            .given()
-            .spec(requestSpecification)
-            .when()
-            .get("https://gorest.co.in/public/v2/users")
-            .then()
-            .spec(responseSpecification)
-            .statusCode(200)
-            .body(Matchers.containsInAnyOrder(List.of(3787, 3786, 3785, 3783, 3781, 3780, 3778, 3774, 3768, 3762)));
+        TestData.deleteTestPost();
     }
 
     @Test
-    void getIncorrectPerson(){
+    void getPosts(){
         RestAssured
             .given()
             .spec(requestSpecification)
-            .pathParam("userId", "000")
             .when()
-            .get("https://gorest.co.in/public/v2/users/{userId}")
+            .get("/posts")
             .then()
             .spec(responseSpecification)
-            .statusCode(404);
+            .statusCode(HttpStatus.SC_OK)
+            .body(Matchers.not(Matchers.emptyArray()));
+    }
+
+    @Test
+    void getIncorrectPost(){
+        RestAssured
+            .given()
+            .spec(requestSpecification)
+            .pathParam("postId", TestData.INCORRECT_ID)
+            .when()
+            .get("/posts/{postId}")
+            .then()
+            .spec(responseSpecification)
+            .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 }

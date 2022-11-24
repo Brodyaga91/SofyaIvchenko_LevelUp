@@ -2,27 +2,63 @@ package ru.levelp.at.homework6.go.rests.posts;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.apache.http.HttpStatus;
+import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
+import ru.levelp.at.homework6.go.rests.BaseApiTest;
+import ru.levelp.at.homework6.go.rests.users.GenerationUser;
 
-public class PostsPostTest {
-
-    String bearerToken = "98536256fe8c96313bf8ec05dd0763e8ab3676056d6fbf3ccc767f7aa89a5c29";
+public class PostsPostTest extends BaseApiTest {
 
     @Test
-    void CreateNewUser(){
+    void createNewPost() {
         RestAssured
             .given()
-            .header("Authorization", "Bearer " + bearerToken)
-            .contentType(ContentType.JSON)
-            .body("{\"name\": \"Bndjfhjk Ff\",\n"
-                + "        \"email\": \"Bndjfhjkerer@ya.rg\",\n"
-                + "        \"gender\": \"male\",\n"
-                + "        \"status\": \"inactive\"}")
-            .log().all()
+            .spec(requestSpecification)
+            .body(GenerationPost.createNewPost())
             .when()
-            .post("https://gorest.co.in/public/v2/users")
+            .post("/posts")
             .then()
-            .log().all()
-            .statusCode(201);
+            .spec(responseSpecification)
+            .statusCode(HttpStatus.SC_CREATED)
+            .body("user_id", Matchers.equalTo(GenerationPost.user_id))
+            .body("title", Matchers.equalTo(GenerationPost.title))
+            .body("body", Matchers.equalTo(GenerationPost.body));
+
     }
+
+    @Test
+    void failAuth(){
+        RestAssured
+            .given()
+            .log().all()
+            .contentType(ContentType.JSON)
+            .body(GenerationPost.createNewPost())
+            .when()
+            .post("/posts")
+            .then()
+            .spec(failAuthSpecification());
+    }
+
+    @Test//параметризовать
+    void sendBlankName(){
+        RestAssured
+            .given()
+            .spec(requestSpecification)
+            .contentType(ContentType.JSON)
+            .body(GenerationPost.createNewPost())
+            .when()
+            .post("/posts")
+            .then()
+            .spec(blankFieldRespSpecification());
+    }
+
+    @Test
+    void incorrectEmail(){}
+
+    @Test
+    void incorrectGender(){}
+
+    @Test
+    void incorrectStatus(){}
 }

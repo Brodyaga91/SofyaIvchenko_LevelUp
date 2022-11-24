@@ -47,6 +47,14 @@ public abstract class BaseApiTest {
             .build();
     }
 
+    public ResponseSpecification failAuthSpecification(){
+        return new ResponseSpecBuilder()
+            .expectStatusCode(HttpStatus.SC_UNAUTHORIZED)
+            .expectBody("message", Matchers.equalTo("Authentication failed"))
+            .addResponseSpecification(responseSpecification)
+            .build();
+    }
+
     public ResponseSpecification blankFieldRespSpecification(){
         return new ResponseSpecBuilder()
             .expectStatusCode(HttpStatus.SC_UNPROCESSABLE_ENTITY)

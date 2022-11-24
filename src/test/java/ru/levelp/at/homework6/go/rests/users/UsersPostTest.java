@@ -1,27 +1,31 @@
 package ru.levelp.at.homework6.go.rests.users;
 
 import io.restassured.RestAssured;
+import org.apache.http.HttpStatus;
+import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import io.restassured.http.ContentType;
 import ru.levelp.at.homework6.go.rests.BaseApiTest;
 
 public class UsersPostTest extends BaseApiTest {
 
+
     @Test
-    void createNewUser(){
+    void createNewUser() {
         RestAssured
             .given()
             .spec(requestSpecification)
-            .contentType(ContentType.JSON)
-            .body("{\"name\": \"Bndjfhjk Ff\",\n"
-                + "        \"email\": \"Bndjfhjkerer@ya.rg\",\n"
-                + "        \"gender\": \"male\",\n"
-                + "        \"status\": \"inactive\"}")
+            .body(GenerationUser.createNewUser())
             .when()
             .post("/users")
             .then()
             .spec(responseSpecification)
-            .statusCode(201);
+            .statusCode(HttpStatus.SC_CREATED)
+            .body("name", Matchers.equalTo(GenerationUser.name))
+            .body("email", Matchers.equalTo(GenerationUser.email))
+            .body("gender", Matchers.equalTo(GenerationUser.gender))
+            .body("status", Matchers.equalTo(GenerationUser.status));
+
     }
 
     @Test
@@ -30,18 +34,25 @@ public class UsersPostTest extends BaseApiTest {
             .given()
             .log().all()
             .contentType(ContentType.JSON)
-            .body("{\"name\": \"Bndjfhjk Ff\",\n"
-                + "        \"email\": \"Bndjfhjkerer@ya.rg\",\n"
-                + "        \"gender\": \"male\",\n"
-                + "        \"status\": \"inactive\"}")
+            .body(GenerationUser.createNewUser())
             .when()
             .post("/users")
             .then()
             .spec(failRespSpecification());
     }
 
-    @Test
-    void incorrectName(){}
+    @Test//параметризовать
+    void sendBlankName(){
+        RestAssured
+            .given()
+            .spec(requestSpecification)
+            .contentType(ContentType.JSON)
+            .body(GenerationUser.createNewUser())
+            .when()
+            .post("/users")
+            .then()
+            .spec(blankFieldRespSpecification());
+    }
 
     @Test
     void incorrectEmail(){}

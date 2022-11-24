@@ -16,16 +16,18 @@ public class UsersGetTest extends BaseApiTest {
         RestAssured
             .given()
             .spec(requestSpecification)
-            .pathParam("userId", TestData.createTestData())
+            .pathParam("userId", TestData.createTestUser())
             .when()
             .get("/users/{userId}")
             .then()
             .spec(responseSpecification)
             .statusCode(200)
-            .body("name", Matchers.equalTo(TestData.name))
-            .body("email", Matchers.equalTo(TestData.email))
-            .body("gender", Matchers.equalTo(TestData.gender))
-            .body("status", Matchers.equalTo(TestData.status));
+            .body("name", Matchers.equalTo(GenerationUser.name))
+            .body("email", Matchers.equalTo(GenerationUser.email))
+            .body("gender", Matchers.equalTo(GenerationUser.gender))
+            .body("status", Matchers.equalTo(GenerationUser.status));
+
+        TestData.deleteTestUser();
     }
 
     @Test
@@ -51,6 +53,6 @@ public class UsersGetTest extends BaseApiTest {
             .get("/users/{userId}")
             .then()
             .spec(responseSpecification)
-            .statusCode(404);
+            .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 }

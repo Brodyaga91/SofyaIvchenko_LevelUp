@@ -2,6 +2,7 @@ package ru.levelp.at.homework6.go.rests.users;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import ru.levelp.at.homework6.go.rests.BaseApiTest;
@@ -14,39 +15,37 @@ public class UsersPutTest extends BaseApiTest {
         RestAssured
             .given()
             .spec(requestSpecification)
-            .pathParam("userId", TestData.createTestData())
+            .pathParam("userId", TestData.createTestUser())
             .contentType(ContentType.JSON)
-            .body("{\"name\": \"" + TestData.name
-                + "\", \"email\": \"" + TestData.email
-                + "\",       \"gender\": \"" + TestData.gender
-                + "\",      \"status\": \"" + TestData.changeStatus +"\"}")
+            .body(GenerationUser.createNewUser())
             .when()
             .put("/users/{userId}")
             .then()
             .spec(responseSpecification)
-            .statusCode(200)
-            .body("name", Matchers.equalTo(TestData.name))
-            .body("email", Matchers.equalTo(TestData.email))
-            .body("gender", Matchers.equalTo(TestData.gender))
-            .body("status", Matchers.equalTo(TestData.changeStatus));
+            .statusCode(HttpStatus.SC_OK)
+            .body("name", Matchers.equalTo(GenerationUser.name))
+            .body("email", Matchers.equalTo(GenerationUser.email))
+            .body("gender", Matchers.equalTo(GenerationUser.gender))
+            .body("status", Matchers.equalTo(GenerationUser.status));
+
+        TestData.deleteTestUser();
     }
 
     @Test
     void failAuth() {
 
-            RestAssured
+        RestAssured
                 .given()
                 .log().all()
-                .pathParam("userId", TestData.createTestData())
+                .pathParam("userId", TestData.createTestUser())
                 .contentType(ContentType.JSON)
-                .body("{\"name\": \"" + TestData.name
-                    + "\", \"email\": \"" + TestData.email
-                    + "\",       \"gender\": \"" + TestData.gender
-                    + "\",      \"status\": \"" + TestData.changeStatus +"\"}")
+                .body(GenerationUser.createNewUser())
                 .when()
                 .put("/users/{userId}")
                 .then()
                 .spec(failRespSpecification());
+
+        TestData.deleteTestUser();
 
     }
 
@@ -58,10 +57,7 @@ public class UsersPutTest extends BaseApiTest {
                 .spec(requestSpecification)
                 .pathParam("userId", TestData.INCORRECT_ID)
                 .contentType(ContentType.JSON)
-                .body("{\"name\": \"" + TestData.name
-                    + "\", \"email\": \"" + TestData.email
-                    + "\",       \"gender\": \"" + TestData.gender
-                    + "\",      \"status\": \"" + TestData.changeStatus +"\"}")
+                .body(GenerationUser.createNewUser())
                 .when()
                 .put("/users/{userId}")
                 .then()
@@ -74,15 +70,14 @@ public class UsersPutTest extends BaseApiTest {
         RestAssured
             .given()
             .spec(requestSpecification)
-            .pathParam("userId", TestData.createTestData())
+            .pathParam("userId", TestData.createTestUser())
             .contentType(ContentType.JSON)
-            .body("{\"name\": \"\""
-                + ", \"email\": \"" + TestData.email
-                + "\",       \"gender\": \"" + TestData.gender
-                + "\",      \"status\": \"" + TestData.changeStatus +"\"}")
+            .body(GenerationUser.createNewUser())
             .when()
             .put("/users/{userId}")
             .then()
             .spec(blankFieldRespSpecification());
+
+        TestData.deleteTestUser();
     }
 }
