@@ -1,4 +1,4 @@
-package ru.levelp.at.homework6.go.rests.posts;
+package ru.levelp.at.homework6.go.rests.comments;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,12 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreatePostData {
-@JsonProperty("user_id")
-        private int userId;
-        private String title;
-        private String body;
-
-    }
-
-
+public class CreateCommentData {
+    @JsonProperty("post_id")
+    private int postId;
+    private String name;
+    private String body;
+    private String email;
+}

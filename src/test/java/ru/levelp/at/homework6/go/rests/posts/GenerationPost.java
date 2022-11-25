@@ -13,7 +13,7 @@ public class GenerationPost {
         var createPostData = CreatePostData.builder()
                                            .title(title)
                                            .body(body)
-                                           .user_id(user_id)
+                                           .userId(user_id)
                                            .build();
         return createPostData;
     }

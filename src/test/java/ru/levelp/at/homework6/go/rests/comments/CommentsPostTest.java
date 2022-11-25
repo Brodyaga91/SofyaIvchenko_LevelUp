@@ -2,27 +2,64 @@ package ru.levelp.at.homework6.go.rests.comments;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.apache.http.HttpStatus;
+import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
+import ru.levelp.at.homework6.go.rests.BaseApiTest;
+import ru.levelp.at.homework6.go.rests.posts.GenerationPost;
 
-public class CommentsPostTest {
-
-    String bearerToken = "98536256fe8c96313bf8ec05dd0763e8ab3676056d6fbf3ccc767f7aa89a5c29";
+public class CommentsPostTest extends BaseApiTest {
 
     @Test
-    void CreateNewUser(){
+    void createNewComment() {
         RestAssured
             .given()
-            .header("Authorization", "Bearer " + bearerToken)
-            .contentType(ContentType.JSON)
-            .body("{\"name\": \"Bndjfhjk Ff\",\n"
-                + "        \"email\": \"Bndjfhjkerer@ya.rg\",\n"
-                + "        \"gender\": \"male\",\n"
-                + "        \"status\": \"inactive\"}")
-            .log().all()
+            .spec(requestSpecification)
+            .body(GenerationComment.createNewComment())
             .when()
-            .post("https://gorest.co.in/public/v2/users")
+            .post("/comments")
             .then()
-            .log().all()
-            .statusCode(201);
+            .spec(responseSpecification)
+            .statusCode(HttpStatus.SC_CREATED)
+            .body("post_id", Matchers.equalTo(GenerationComment.post_id))
+            .body("name", Matchers.equalTo(GenerationComment.name))
+            .body("body", Matchers.equalTo(GenerationComment.body))
+            .body("email", Matchers.equalTo(GenerationComment.email));
+
     }
+
+    @Test
+    void failAuth(){
+        RestAssured
+            .given()
+            .log().all()
+            .contentType(ContentType.JSON)
+            .body(GenerationComment.createNewComment())
+            .when()
+            .post("/comments")
+            .then()
+            .spec(failAuthSpecification());
+    }
+
+    @Test//параметризовать
+    void sendBlankName(){
+        RestAssured
+            .given()
+            .spec(requestSpecification)
+            .contentType(ContentType.JSON)
+            .body(GenerationComment.createNewComment())
+            .when()
+            .post("/comments")
+            .then()
+            .spec(blankFieldRespSpecification());
+    }
+
+    @Test
+    void incorrectEmail(){}
+
+    @Test
+    void incorrectGender(){}
+
+    @Test
+    void incorrectStatus(){}
 }

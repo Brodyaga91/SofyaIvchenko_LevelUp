@@ -69,14 +69,14 @@ public class PostsPutTest extends BaseApiTest {
         RestAssured
             .given()
             .spec(requestSpecification)
-            .pathParam("userId", TestData.createTestUser())
+            .pathParam("postId", TestData.createTestPost())
             .contentType(ContentType.JSON)
-            .body(GenerationUser.createNewUser())
+            .body(GenerationPost.createNewPost())
             .when()
-            .put("/users/{userId}")
+            .put("/posts/{postId}")
             .then()
             .spec(blankFieldRespSpecification());
 
-        TestData.deleteTestUser();
+        TestData.deleteTestPost();
     }
 }
