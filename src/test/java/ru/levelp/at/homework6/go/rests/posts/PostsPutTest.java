@@ -7,11 +7,11 @@ import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import ru.levelp.at.homework6.go.rests.BaseApiTest;
 import ru.levelp.at.homework6.go.rests.TestData;
-import ru.levelp.at.homework6.go.rests.users.GenerationUser;
+
 
 public class PostsPutTest extends BaseApiTest {
     @Test
-    void updatePost(){
+    void updatePost() {
         RestAssured
             .given()
             .spec(requestSpecification)
@@ -49,7 +49,7 @@ public class PostsPutTest extends BaseApiTest {
     }
 
     @Test
-    void incorrectResource(){
+    void incorrectResource() {
 
         RestAssured
             .given()
@@ -64,19 +64,4 @@ public class PostsPutTest extends BaseApiTest {
 
     }
 
-    @Test//параметризировать
-    void sendBlankName(){
-        RestAssured
-            .given()
-            .spec(requestSpecification)
-            .pathParam("postId", TestData.createTestPost())
-            .contentType(ContentType.JSON)
-            .body(GenerationPost.createNewPost())
-            .when()
-            .put("/posts/{postId}")
-            .then()
-            .spec(blankFieldRespSpecification());
-
-        TestData.deleteTestPost();
-    }
 }

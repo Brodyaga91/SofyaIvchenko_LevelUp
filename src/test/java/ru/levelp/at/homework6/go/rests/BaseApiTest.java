@@ -1,16 +1,17 @@
 package ru.levelp.at.homework6.go.rests;
 
+import static org.hamcrest.Matchers.containsString;
+
 import io.restassured.RestAssured;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
-import io.restassured.filter.log.LogDetail;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.LogDetail;
+import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.testng.annotations.BeforeMethod;
-import io.restassured.http.ContentType;
-import org.testng.annotations.BeforeSuite;
 
 public abstract class BaseApiTest {
 
@@ -39,7 +40,7 @@ public abstract class BaseApiTest {
 
     }
 
-    public ResponseSpecification failRespSpecification(){
+    public ResponseSpecification failRespSpecification() {
         return new ResponseSpecBuilder()
             .expectStatusCode(HttpStatus.SC_NOT_FOUND)
             .expectBody("message", Matchers.equalTo("Resource not found"))
@@ -47,7 +48,7 @@ public abstract class BaseApiTest {
             .build();
     }
 
-    public ResponseSpecification failAuthSpecification(){
+    public ResponseSpecification failAuthSpecification() {
         return new ResponseSpecBuilder()
             .expectStatusCode(HttpStatus.SC_UNAUTHORIZED)
             .expectBody("message", Matchers.equalTo("Authentication failed"))
@@ -55,13 +56,14 @@ public abstract class BaseApiTest {
             .build();
     }
 
-    public ResponseSpecification blankFieldRespSpecification(){
+    public ResponseSpecification blankFieldRespSpecification() {
         return new ResponseSpecBuilder()
             .expectStatusCode(HttpStatus.SC_UNPROCESSABLE_ENTITY)
-            .expectBody("message", Matchers.contains("can't be blank"))
+            .expectBody(Matchers.anyOf(containsString("can't be blank"), containsString("must exist")))
             .addResponseSpecification(responseSpecification)
             .build();
     }
+
 
 
 

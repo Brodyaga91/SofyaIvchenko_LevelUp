@@ -9,7 +9,7 @@ import ru.levelp.at.homework6.go.rests.TestData;
 
 public class PostsDeleteTest extends BaseApiTest {
     @Test
-    void successDelete(){
+    void successDelete() {
         RestAssured
             .given()
             .spec(requestSpecification)
@@ -23,7 +23,7 @@ public class PostsDeleteTest extends BaseApiTest {
     }
 
     @Test
-    void failedAuth(){
+    void failedAuth() {
         RestAssured
             .given()
             .log().all()
@@ -38,7 +38,7 @@ public class PostsDeleteTest extends BaseApiTest {
     }
 
     @Test
-    void incorrectData(){
+    void incorrectData() {
         RestAssured
             .given()
             .spec(requestSpecification)

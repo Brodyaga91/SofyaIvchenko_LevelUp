@@ -1,7 +1,6 @@
 package ru.levelp.at.homework6.go.rests.comments;
 
 import com.github.javafaker.Faker;
-import ru.levelp.at.homework6.go.rests.posts.CreatePostData;
 
 public class GenerationComment {
     static String name = new Faker().funnyName().toString();
@@ -9,13 +8,21 @@ public class GenerationComment {
     static String email = new Faker().internet().emailAddress();
     public static int post_id = 103;
 
-    static public CreateCommentData createNewComment() {
-        var createCommentData = CreateCommentData.builder()
-                                           .postId(post_id)
-                                           .body(body)
-                                           .name(name)
-                                           .email(email)
-                                           .build();
-        return createCommentData;
+    public static CreateCommentData createNewComment() {
+        return CreateCommentData.builder()
+                                .postId(post_id)
+                                .body(body)
+                                .name(name)
+                                .email(email)
+                                .build();
+    }
+
+    public static CreateCommentData createCommentWithoutField(int postId, String body, String name, String email) {
+        return CreateCommentData.builder()
+                                .postId(postId)
+                                .body(body)
+                                .name(name)
+                                .email(email)
+                                .build();
     }
 }

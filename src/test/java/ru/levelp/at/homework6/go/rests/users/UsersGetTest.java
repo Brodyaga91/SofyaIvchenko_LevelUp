@@ -6,13 +6,13 @@ import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import ru.levelp.at.homework6.go.rests.BaseApiTest;
 import ru.levelp.at.homework6.go.rests.TestData;
-import java.util.List;
+
 
 public class UsersGetTest extends BaseApiTest {
 
 
     @Test
-    void getOnePerson(){
+    void getOnePerson() {
         RestAssured
             .given()
             .spec(requestSpecification)
@@ -31,7 +31,7 @@ public class UsersGetTest extends BaseApiTest {
     }
 
     @Test
-    void getPersons(){
+    void getPersons() {
         RestAssured
             .given()
             .spec(requestSpecification)
@@ -44,7 +44,7 @@ public class UsersGetTest extends BaseApiTest {
     }
 
     @Test
-    void getIncorrectPerson(){
+    void getIncorrectPerson() {
         RestAssured
             .given()
             .spec(requestSpecification)

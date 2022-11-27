@@ -1,18 +1,16 @@
 package ru.levelp.at.homework6.go.rests.comments;
 
 import io.restassured.RestAssured;
-import java.util.List;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import ru.levelp.at.homework6.go.rests.BaseApiTest;
 import ru.levelp.at.homework6.go.rests.TestData;
-import ru.levelp.at.homework6.go.rests.posts.GenerationPost;
 
 public class CommentsGetTest extends BaseApiTest {
 
     @Test
-    void getOneComment(){
+    void getOneComment() {
         RestAssured
             .given()
             .spec(requestSpecification)
@@ -31,7 +29,7 @@ public class CommentsGetTest extends BaseApiTest {
     }
 
     @Test
-    void getComments(){
+    void getComments() {
         RestAssured
             .given()
             .spec(requestSpecification)
@@ -44,7 +42,7 @@ public class CommentsGetTest extends BaseApiTest {
     }
 
     @Test
-    void getIncorrectComment(){
+    void getIncorrectComment() {
         RestAssured
             .given()
             .spec(requestSpecification)

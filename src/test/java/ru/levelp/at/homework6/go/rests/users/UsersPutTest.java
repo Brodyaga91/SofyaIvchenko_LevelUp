@@ -11,7 +11,7 @@ import ru.levelp.at.homework6.go.rests.TestData;
 public class UsersPutTest extends BaseApiTest {
 
     @Test
-    void updateData(){
+    void updateData() {
         RestAssured
             .given()
             .spec(requestSpecification)
@@ -50,9 +50,9 @@ public class UsersPutTest extends BaseApiTest {
     }
 
     @Test
-    void incorrectResource(){
+    void incorrectResource() {
 
-            RestAssured
+        RestAssured
                 .given()
                 .spec(requestSpecification)
                 .pathParam("userId", TestData.INCORRECT_ID)
@@ -65,19 +65,5 @@ public class UsersPutTest extends BaseApiTest {
 
     }
 
-    @Test//параметризировать
-    void sendBlankName(){
-        RestAssured
-            .given()
-            .spec(requestSpecification)
-            .pathParam("userId", TestData.createTestUser())
-            .contentType(ContentType.JSON)
-            .body(GenerationUser.createNewUser())
-            .when()
-            .put("/users/{userId}")
-            .then()
-            .spec(blankFieldRespSpecification());
 
-        TestData.deleteTestUser();
-    }
 }

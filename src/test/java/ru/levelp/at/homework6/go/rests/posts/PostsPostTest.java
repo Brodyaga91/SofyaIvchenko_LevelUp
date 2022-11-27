@@ -4,9 +4,9 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.levelp.at.homework6.go.rests.BaseApiTest;
-import ru.levelp.at.homework6.go.rests.users.GenerationUser;
 
 public class PostsPostTest extends BaseApiTest {
 
@@ -28,7 +28,7 @@ public class PostsPostTest extends BaseApiTest {
     }
 
     @Test
-    void failAuth(){
+    void failAuth() {
         RestAssured
             .given()
             .log().all()
@@ -40,25 +40,26 @@ public class PostsPostTest extends BaseApiTest {
             .spec(failAuthSpecification());
     }
 
-    @Test//параметризовать
-    void sendBlankName(){
+    @Test(dataProvider = "negativeDataProviderPosts")
+    void sendBlankName(CreatePostData request) {
         RestAssured
             .given()
             .spec(requestSpecification)
             .contentType(ContentType.JSON)
-            .body(GenerationPost.createNewPost())
+            .body(request)
             .when()
             .post("/posts")
             .then()
             .spec(blankFieldRespSpecification());
     }
 
-    @Test
-    void incorrectEmail(){}
+    @DataProvider
+    public Object[][] negativeDataProviderPosts() {
+        return new Object[][]{
+            {GenerationPost.createPostWithoutField("", GenerationPost.body, GenerationPost.user_id)},
+            {GenerationPost.createPostWithoutField(GenerationPost.title, "", GenerationPost.user_id)},
+            {GenerationPost.createPostWithoutField(GenerationPost.title, GenerationPost.body, 0)},
 
-    @Test
-    void incorrectGender(){}
-
-    @Test
-    void incorrectStatus(){}
+        };
+    }
 }

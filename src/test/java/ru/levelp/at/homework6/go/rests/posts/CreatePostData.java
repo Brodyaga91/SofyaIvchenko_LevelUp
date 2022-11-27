@@ -11,11 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CreatePostData {
-@JsonProperty("user_id")
-        private int userId;
-        private String title;
-        private String body;
+    @JsonProperty("user_id")
+    private int userId;
+    private String title;
+    private String body;
 
     }
-
-

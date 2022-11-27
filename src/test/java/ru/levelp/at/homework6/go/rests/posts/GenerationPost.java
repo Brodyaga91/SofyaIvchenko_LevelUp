@@ -1,7 +1,6 @@
 package ru.levelp.at.homework6.go.rests.posts;
 
 import com.github.javafaker.Faker;
-import ru.levelp.at.homework6.go.rests.users.CreateUserData;
 
 public class GenerationPost {
     static String title = new Faker().animal().toString();
@@ -9,12 +8,19 @@ public class GenerationPost {
     public static int user_id = 103;
 
 
-    static public CreatePostData createNewPost() {
-        var createPostData = CreatePostData.builder()
-                                           .title(title)
-                                           .body(body)
-                                           .userId(user_id)
-                                           .build();
-        return createPostData;
+    public static CreatePostData createNewPost() {
+        return CreatePostData.builder()
+                             .title(title)
+                             .body(body)
+                             .userId(user_id)
+                             .build();
+    }
+
+    public static CreatePostData createPostWithoutField(String title, String body, int user_id) {
+        return CreatePostData.builder()
+                             .title(title)
+                             .body(body)
+                             .userId(user_id)
+                             .build();
     }
 }

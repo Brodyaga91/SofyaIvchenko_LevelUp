@@ -1,7 +1,6 @@
 package ru.levelp.at.homework6.go.rests.posts;
 
 import io.restassured.RestAssured;
-import java.util.List;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
@@ -11,7 +10,7 @@ import ru.levelp.at.homework6.go.rests.TestData;
 public class PostsGetTest extends BaseApiTest {
 
     @Test
-    void getOnePost(){
+    void getOnePost() {
         RestAssured
             .given()
             .spec(requestSpecification)
@@ -29,7 +28,7 @@ public class PostsGetTest extends BaseApiTest {
     }
 
     @Test
-    void getPosts(){
+    void getPosts() {
         RestAssured
             .given()
             .spec(requestSpecification)
@@ -42,7 +41,7 @@ public class PostsGetTest extends BaseApiTest {
     }
 
     @Test
-    void getIncorrectPost(){
+    void getIncorrectPost() {
         RestAssured
             .given()
             .spec(requestSpecification)

@@ -1,21 +1,20 @@
 package ru.levelp.at.homework6.go.rests;
-import com.github.javafaker.Faker;
+
+import static io.restassured.RestAssured.given;
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import ru.levelp.at.homework6.go.rests.comments.GenerationComment;
 import ru.levelp.at.homework6.go.rests.posts.GenerationPost;
-import ru.levelp.at.homework6.go.rests.users.CreateUserData;
 import ru.levelp.at.homework6.go.rests.users.GenerationUser;
 
-import static io.restassured.RestAssured.given;
 
-
-public class TestData extends BaseApiTest{
+public class TestData extends BaseApiTest {
     public static String id;
     public static final String INCORRECT_ID = "000";
 
-    public static String createTestUser(){
+    public static String createTestUser() {
 
 
         id = given()
@@ -31,7 +30,7 @@ public class TestData extends BaseApiTest{
         return id;
     }
 
-    public static void deleteTestUser(){
+    public static void deleteTestUser() {
         RestAssured
             .given()
             .spec(requestSpecification)
@@ -45,7 +44,7 @@ public class TestData extends BaseApiTest{
 
     }
 
-    public static String createTestPost(){
+    public static String createTestPost() {
 
 
         id = given()
@@ -61,7 +60,7 @@ public class TestData extends BaseApiTest{
         return id;
     }
 
-    public static void deleteTestPost(){
+    public static void deleteTestPost() {
         RestAssured
             .given()
             .spec(requestSpecification)
@@ -75,7 +74,7 @@ public class TestData extends BaseApiTest{
 
     }
 
-    public static String createTestComment(){
+    public static String createTestComment() {
 
 
         id = given()
@@ -91,7 +90,7 @@ public class TestData extends BaseApiTest{
         return id;
     }
 
-    public static void deleteTestComment(){
+    public static void deleteTestComment() {
         RestAssured
             .given()
             .spec(requestSpecification)

@@ -4,9 +4,9 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.levelp.at.homework6.go.rests.BaseApiTest;
-import ru.levelp.at.homework6.go.rests.posts.GenerationPost;
 
 public class CommentsPostTest extends BaseApiTest {
 
@@ -29,7 +29,7 @@ public class CommentsPostTest extends BaseApiTest {
     }
 
     @Test
-    void failAuth(){
+    void failAuth() {
         RestAssured
             .given()
             .log().all()
@@ -41,25 +41,28 @@ public class CommentsPostTest extends BaseApiTest {
             .spec(failAuthSpecification());
     }
 
-    @Test//параметризовать
-    void sendBlankName(){
+    @Test(dataProvider = "negativeDataProviderComments")
+    void sendBlankName(CreateCommentData request) {
         RestAssured
             .given()
             .spec(requestSpecification)
             .contentType(ContentType.JSON)
-            .body(GenerationComment.createNewComment())
+            .body(request)
             .when()
             .post("/comments")
             .then()
             .spec(blankFieldRespSpecification());
     }
 
-    @Test
-    void incorrectEmail(){}
+    @DataProvider
+    public Object[][] negativeDataProviderComments() {
+        return new Object[][]{
+            {GenerationComment.createCommentWithoutField(0, GenerationComment.body, GenerationComment.name, GenerationComment.email)},
+            {GenerationComment.createCommentWithoutField(GenerationComment.post_id, "", GenerationComment.name, GenerationComment.email)},
+            {GenerationComment.createCommentWithoutField(GenerationComment.post_id, GenerationComment.body, "", GenerationComment.email)},
+            {GenerationComment.createCommentWithoutField(GenerationComment.post_id, GenerationComment.body, GenerationComment.name, "")}
 
-    @Test
-    void incorrectGender(){}
+        };
+    }
 
-    @Test
-    void incorrectStatus(){}
 }
