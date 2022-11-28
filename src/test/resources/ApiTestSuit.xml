@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="AllTests">
+    <test name="Start all tests">
+        <packages>
+            <package name="ru.levelp.at.homework6.go.rests.*"/>
+        </packages>
+    </test>
+</suite>
