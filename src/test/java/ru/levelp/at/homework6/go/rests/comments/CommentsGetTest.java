@@ -20,8 +20,8 @@ public class CommentsGetTest extends BaseApiTest {
             .then()
             .spec(responseSpecification)
             .statusCode(200)
-            .body("user_id", Matchers.equalTo(GenerationComment.post_id))
-            .body("title", Matchers.equalTo(GenerationComment.name))
+            .body("post_id", Matchers.equalTo(GenerationComment.post_id))
+            .body("name", Matchers.equalTo(GenerationComment.name))
             .body("body", Matchers.equalTo(GenerationComment.body))
             .body("email", Matchers.equalTo(GenerationComment.email));
 

@@ -16,11 +16,11 @@ public class GenerationPost {
                              .build();
     }
 
-    public static CreatePostData createPostWithoutField(String title, String body, int user_id) {
+    public static CreatePostData createPostWithoutField(String title, String body, int userId) {
         return CreatePostData.builder()
                              .title(title)
                              .body(body)
-                             .userId(user_id)
+                             .userId(userId)
                              .build();
     }
 }

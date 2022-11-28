@@ -3,7 +3,7 @@
 <suite name="AllTests">
     <test name="Start all tests">
         <packages>
-            <package name="homework6"/>
+            <package name="ru.levelp.at.homework6.go.rests.*"/>
         </packages>
     </test>
 </suite>

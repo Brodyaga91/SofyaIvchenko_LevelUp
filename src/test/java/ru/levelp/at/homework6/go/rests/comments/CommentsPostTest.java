@@ -57,10 +57,14 @@ public class CommentsPostTest extends BaseApiTest {
     @DataProvider
     public Object[][] negativeDataProviderComments() {
         return new Object[][]{
-            {GenerationComment.createCommentWithoutField(0, GenerationComment.body, GenerationComment.name, GenerationComment.email)},
-            {GenerationComment.createCommentWithoutField(GenerationComment.post_id, "", GenerationComment.name, GenerationComment.email)},
-            {GenerationComment.createCommentWithoutField(GenerationComment.post_id, GenerationComment.body, "", GenerationComment.email)},
-            {GenerationComment.createCommentWithoutField(GenerationComment.post_id, GenerationComment.body, GenerationComment.name, "")}
+            {GenerationComment.createCommentWithoutField(
+                0, GenerationComment.body, GenerationComment.name, GenerationComment.email)},
+            {GenerationComment.createCommentWithoutField(
+                GenerationComment.post_id, "", GenerationComment.name, GenerationComment.email)},
+            {GenerationComment.createCommentWithoutField(
+                GenerationComment.post_id, GenerationComment.body, "", GenerationComment.email)},
+            {GenerationComment.createCommentWithoutField(
+                GenerationComment.post_id, GenerationComment.body, GenerationComment.name, "")}
 
         };
     }

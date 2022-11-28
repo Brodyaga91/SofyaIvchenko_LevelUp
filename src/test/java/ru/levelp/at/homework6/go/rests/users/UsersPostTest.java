@@ -39,7 +39,7 @@ public class UsersPostTest extends BaseApiTest {
             .when()
             .post("/users")
             .then()
-            .spec(failRespSpecification());
+            .spec(failAuthSpecification());
     }
 
 
@@ -59,10 +59,14 @@ public class UsersPostTest extends BaseApiTest {
     @DataProvider
     public Object[][] negativeDataProviderUsers() {
         return new Object[][]{
-            {GenerationUser.createUserWithoutField("", GenerationUser.email, GenerationUser.gender, GenerationUser.status)},
-            {GenerationUser.createUserWithoutField(GenerationUser.name, "", GenerationUser.gender, GenerationUser.status)},
-            {GenerationUser.createUserWithoutField(GenerationUser.name, GenerationUser.email, "", GenerationUser.status)},
-            {GenerationUser.createUserWithoutField(GenerationUser.name, GenerationUser.email, GenerationUser.gender, "")}
+            {GenerationUser.createUserWithoutField(
+                "", GenerationUser.email, GenerationUser.gender, GenerationUser.status)},
+            {GenerationUser.createUserWithoutField(
+                GenerationUser.name, "", GenerationUser.gender, GenerationUser.status)},
+            {GenerationUser.createUserWithoutField(
+                GenerationUser.name, GenerationUser.email, "", GenerationUser.status)},
+            {GenerationUser.createUserWithoutField(
+                GenerationUser.name, GenerationUser.email, GenerationUser.gender, "")}
 
         };
     }

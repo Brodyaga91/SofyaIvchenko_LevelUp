@@ -16,4 +16,4 @@ public class CreatePostData {
     private String title;
     private String body;
 
-    }
+}
